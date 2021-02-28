@@ -11,7 +11,10 @@ const {
     likeRow,
     dislikeRow,
     unlikeRow,
-    undoDislikeRow
+    undoDislikeRow,
+    postOption,
+    deleteOption,
+    editOption
 } = require('./APIs/rows')
 
 const {
@@ -29,6 +32,10 @@ app.get('/row/:rowId/like',auth, likeRow)
 app.get('/row/:rowId/dislike',auth, dislikeRow)
 app.get('/row/:rowId/unlike',auth, unlikeRow)
 app.get('/row/:rowId/undoDislike',auth, undoDislikeRow)
+app.post('/row/:rowId/option',auth, postOption)
+app.delete('/option/:optionId', deleteOption)
+app.put('/option/:optionId', editOption)
+
 
 
 

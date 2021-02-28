@@ -324,3 +324,71 @@ exports.undoDislikeRow = (req, res) => {
     });
 };
 
+exports.postOption = (req, res) => {
+  if (req.body.body.trim() === ''){
+      return res.status(400).json({ comment: 'Must not be empty' });
+  }   
+
+  const newOption = {   
+    body: req.body.body,
+    createdAt: new Date().toISOString(),
+    rowId: req.params.rowId,
+    index: req.body.index  
+  };
+
+  db.doc(`/rows/${req.params.rowId}`)
+    .get()
+    .then((doc) => {
+      if (!doc.exists) {
+        return res.status(404).json({ error: 'Row not found' });
+      }
+    })
+    .then(() => {
+      return db.collection('options').add(newOption);
+    })
+    .then(() => {
+      res.json(newOption);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: 'Something went wrong' });
+  });
+};
+
+exports.deleteOption = (req, res) => {
+  const document = db.doc(`/options/${req.params.optionId}`);
+  document
+      .get()
+      .then((doc) => {
+          if (!doc.exists) {
+              return res.status(404).json({ error: 'Row not found' })
+          }
+          return document.delete();
+      })
+      .then(() => {
+          res.json({ message: 'Delete successful' });
+      })
+      .catch((err) => {
+          console.error(err);
+          return res.status(500).json({ error: err.code });
+      });
+};
+
+exports.editOption = ( req, res ) => {
+  if(req.body.optionId || req.body.createdAt){
+      res.status(403).json({message: 'Not allowed to edit'});
+  }
+  let document = db.collection('options').doc(`${req.params.optionId}`);
+  document.update(req.body)
+  .then(()=> {
+      res.json({message: 'Updated successfully'});
+  })
+  .catch((err) => {
+      console.error(err);
+      return res.status(500).json({
+              error: err.code
+      });
+  });
+};
+
+
