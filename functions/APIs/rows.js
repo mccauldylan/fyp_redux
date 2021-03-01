@@ -1,32 +1,30 @@
 const { db } = require('../util/admin');
 
 exports.getCategory = (req, res) => {
-    let categoryData = {};
-    db.doc(`/categories/${req.params.categoryId}`)
-      .get()
-      .then((doc) => {
-        if (!doc.exists) {
-          return res.status(404).json({ error: 'category not found' });
-        }
-        categoryData = doc.data();
-        categoryData.categoryId = doc.id;
-        return db
-          .collection('rows')
-          .orderBy('index', 'asc')
-          .where('categoryId', '==', req.params.categoryId)
-          .get();
-      })
-      .then((data) => {
-        categoryData.rows = [];
-        data.forEach((doc) => {
-          categoryData.rows.push(doc.data());
-        });
-        return res.json(categoryData);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).json({ error: err.code });
-      });
+	db
+		.collection('rows')
+    .where('categoryId', '==', req.params.categoryId)
+		.orderBy('index', 'asc')
+		.get()
+		.then((data) => {
+			let rows = [];
+			data.forEach((doc) => {
+				rows.push({
+          rowId: doc.id,
+          index: doc.data().index,
+          body: doc.data().body,
+          dataType: doc.data().dataType,
+          visit: doc.data().visit,
+          approveCount: doc.data().approveCount,
+          diapproveCount: doc.data().disapproveCount
+				});
+			});
+			return res.json(rows);
+		})
+		.catch((err) => {
+			console.error(err);
+			return res.status(500).json({ error: err.code});
+		});
   };
 
 exports.postRow = (req, res) => {
