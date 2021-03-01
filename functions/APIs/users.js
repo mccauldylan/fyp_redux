@@ -96,3 +96,30 @@ exports.signUpUser = (request, response) => {
 			}
 		});
 }
+
+exports.getAuthenticatedUser = (req, res) => {
+    let userData = {};
+    db.doc(`/users/${req.user.username}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          userData.credentials = doc.data();
+          return db
+            .collection("approves")
+            .where("username", "==", req.user.username)
+            .get();
+        }
+      })
+      .then((data) => {
+        userData.approves = [];
+        data.forEach((doc) => {
+          userData.approves.push(doc.data());
+        });
+        
+        return res.json(userData);
+      })
+      .catch((err) => {
+        console.error(err);
+        return res.status(500).json({ error: err.code });
+      });
+  };

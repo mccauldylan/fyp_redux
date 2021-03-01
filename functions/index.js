@@ -14,16 +14,19 @@ const {
     undoDislikeRow,
     postOption,
     deleteOption,
-    editOption
+    editOption,
+    getOneRow
 } = require('./APIs/rows')
 
 const {
     loginUser,
-    signUpUser
+    signUpUser,
+    getAuthenticatedUser
 } = require('./APIs/users')
 
 // rows
 app.get('/category/:categoryId', getCategory);
+app.get('/row/:rowId', getOneRow)
 app.post('/category/:categoryId', postRow);
 app.delete('/row/:rowId', deleteRow)
 app.put('/row/:rowId', editRow)
@@ -43,6 +46,6 @@ app.put('/option/:optionId', editOption)
 // Users
 app.post('/login', loginUser);
 app.post('/signup', signUpUser);
-
+app.get('/user',auth, getAuthenticatedUser);
 
 exports.api = functions.https.onRequest(app);

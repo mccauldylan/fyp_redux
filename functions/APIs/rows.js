@@ -27,6 +27,52 @@ exports.getCategory = (req, res) => {
 		});
   };
 
+
+  exports.getOneRow = (req, res) => {
+    let rowData = {};
+    db.doc(`/rows/${req.params.rowId}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          rowData = doc.data();
+          rowData.rowId = doc.id
+          return db
+            .collection("comments")
+            .where("rowId", "==", req.params.rowId)
+            .get();
+        } else{
+          return res.status(500).json({ error: err.code });
+
+        }
+      })
+      .then((data) => {
+        rowData.comments = [];
+        data.forEach((doc) => {
+          rowData.comments.push(doc.data());
+        });
+        return db
+          .collection("options")
+          .where("rowId", "==", req.params.rowId)
+          .orderBy("index", "asc")
+          .get();
+      })
+      .then((data) => {
+        rowData.options = [];
+        data.forEach((doc) => {
+          rowData.options.push({
+            index: doc.data().index,
+            body: doc.data().body,
+            rowId: doc.data().rowId,
+          });
+        });
+        return res.json(rowData);
+      })
+      .catch((err) => {
+        console.error(err);
+        return res.status(500).json({ error: err.code });
+      });
+  };
+
 exports.postRow = (req, res) => {
     if (req.body.body.trim() === ''){
         return res.status(400).json({ comment: 'Must not be empty' });

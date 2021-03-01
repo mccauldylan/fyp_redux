@@ -39,7 +39,7 @@ class Table extends Component {
             <div>
                 <ul>
                     {this.state.rows.map((row)=>(
-                        <li>{row.body}</li>
+                        <li key = {row.rowId}>{row.body}</li>
                     ))}
                        
                 </ul>

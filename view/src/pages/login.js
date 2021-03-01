@@ -9,8 +9,11 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import PropTypes from 'prop-types'
 
-import axios from 'axios';
+// redux
+import {connect} from 'react-redux'
+import {loginUser} from '../redux/actions/userActions'
 
 const styles = (theme) => ({
 	paper: {
@@ -48,7 +51,6 @@ class login extends Component {
 			email: '',
 			password: '',
 			errors: [],
-			loading: false
 		};
 	}
 
@@ -68,31 +70,16 @@ class login extends Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault();
-		this.setState({ loading: true });
 		const userData = {
 			email: this.state.email,
 			password: this.state.password
 		};
-		axios
-			.post('/login', userData)
-			.then((response) => {
-				localStorage.setItem('AuthToken', `Bearer ${response.data.token}`);
-				this.setState({ 
-					loading: false,
-				});		
-				this.props.history.push('/');
-			})
-			.catch((error) => {				
-				this.setState({
-					errors: error.response.data,
-					loading: false
-				});
-			});
+		this.props.loginUser(userData, this.props.history)
 	};
 
 	render() {
-		const { classes } = this.props;
-		const { errors, loading } = this.state;
+		const { classes, UI: {loading} } = this.props;
+		const { errors } = this.state;
 		return (
 			<Container component="main" maxWidth="xs">
 				<CssBaseline />
@@ -161,5 +148,21 @@ class login extends Component {
 		);
 	}
 }
+login.propTypes = {
+	classes: PropTypes.object.isRequired,
+	loginUser: PropTypes.func.isRequired,
+	user: PropTypes.object.isRequired,
+	UI:PropTypes.object.isRequired
 
-export default withStyles(styles)(login);
+}
+
+const mapStateToProps = (state) => ({
+	user: state.user,
+	UI: state.UI
+})
+
+const mapActionsToProps = {
+	loginUser
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(login));
