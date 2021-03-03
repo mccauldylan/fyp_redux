@@ -8,7 +8,7 @@ class Profile extends Component {
   render() {
     const {
       user: {
-        credentials: { firstName, lastName, username, email, profession },
+        credentials, // { firstName, lastName, username, email, profession },
         authenticated,
         loading,
       },
@@ -18,8 +18,8 @@ class Profile extends Component {
       authenticated ? (
         <Paper>
           <div>
-            <h2>{firstName}</h2>
-            <h2>{profession}</h2>
+            <h2>{credentials.firstName}</h2>
+            <h2>{credentials.profession}</h2>
           </div>
         </Paper>
       ) : (
