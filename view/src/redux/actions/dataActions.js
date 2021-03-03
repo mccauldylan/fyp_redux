@@ -30,5 +30,10 @@ export const getCategory = (categoryId) => (dispatch) => {
       });
       dispatch({ type: "STOP_LOADING_UI" });
     })
-    .catch((err) => console.log(err));
+    .catch(() => {
+      dispatch({
+        type: SET_SCREAMS,
+        payload: null,
+      });
+    });
 };
