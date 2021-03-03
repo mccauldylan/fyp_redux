@@ -10,8 +10,12 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import PropTypes from 'prop-types'
 
-import axios from 'axios';
+
+//redux
+import {connect} from 'react-redux'
+import {signupUser} from '../redux/actions/userActions'
 
 const styles = (theme) => ({
 	paper: {
@@ -49,7 +53,6 @@ class signup extends Component {
 			confirmPassword: '',
 			profession: '',
 			errors: [],
-			loading: false
 		};
 	}
 
@@ -69,7 +72,6 @@ class signup extends Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault();
-		this.setState({ loading: true });
 		const newUserData = {
 			firstName: this.state.firstName,
 			lastName: this.state.lastName,
@@ -80,27 +82,12 @@ class signup extends Component {
 			profession: this.state.profession
 
 		};
-
-		axios
-			.post('/signup', newUserData)
-			.then((response) => {
-				localStorage.setItem('AuthToken', `${response.data.token}`);
-				this.setState({
-					loading: false,
-				});
-				this.props.history.push('/');
-			})
-			.catch((error) => {
-				this.setState({
-					errors: error.response.data,
-					loading: false
-				});
-			});
+		this.props.signupUser(newUserData, this.props.history)
 	};
 
 	render() {
-		const { classes } = this.props;
-		const { errors, loading } = this.state;
+		const { classes, UI: {loading} } = this.props;
+		const { errors } = this.state;
 		return (
 			<Container component="main" maxWidth="xs">
 				<CssBaseline />
@@ -248,4 +235,16 @@ class signup extends Component {
 	}
 }
 
-export default withStyles(styles)(signup);
+signup.propTypes = {
+	classes: PropTypes.object.isRequired,
+	user: PropTypes.object.isRequired,
+	UI: PropTypes.object.isRequired,
+	signupUser: PropTypes.func.isRequired
+  };
+  
+  const mapStateToProps = (state) => ({
+	user: state.user,
+	UI: state.UI
+  });
+  
+  export default connect(mapStateToProps,{ signupUser })(withStyles(styles)(signup));
