@@ -1,6 +1,6 @@
 const initialState = {
   categories: [],
-  category: {},
+  category: [],
   loading: false,
 };
 
@@ -22,6 +22,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         category: action.payload,
+        loading: false,
       };
     default:
       return state;
