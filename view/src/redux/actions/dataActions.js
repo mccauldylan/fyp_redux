@@ -32,8 +32,22 @@ export const getCategory = (categoryId) => (dispatch) => {
     })
     .catch(() => {
       dispatch({
-        type: SET_SCREAMS,
+        type: "SET_CATEGORY",
         payload: null,
       });
     });
+};
+
+export const getRow = (rowId) => (dispatch) => {
+  dispatch({ type: "LOADING_UI" });
+  axios
+    .get(`/row/${rowId}`)
+    .then((res) => {
+      dispatch({
+        type: "SET_ROW",
+        payload: res.data,
+      });
+      dispatch({ type: "STOP_LOADING_UI" });
+    })
+    .catch((err) => console.log(err));
 };

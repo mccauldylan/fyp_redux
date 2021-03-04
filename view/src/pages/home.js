@@ -8,6 +8,16 @@ import { getCategories } from "../redux/actions/dataActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
+import TableCell from "@material-ui/core/TableCell";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 
 export class home extends Component {
   componentDidMount() {
@@ -18,29 +28,26 @@ export class home extends Component {
     const { categories, loading } = this.props.data;
     let placeholder = !loading ? (
       categories.map((category) => (
-        <ul>
-          <li>
-            <Typography
-              variant="h5"
-              component={Link}
-              to={`/categories/${category.name}`}
-              color="primary"
-            >
-              {category.name}
-            </Typography>
-          </li>
-        </ul>
+        <Paper elevation={0}>
+          <List disablePadding>
+            <ListItemLink href={`/categories/${category.name}`}>
+              <ListItemText primary={category.name}></ListItemText>
+            </ListItemLink>
+            <Divider />
+          </List>
+        </Paper>
       ))
     ) : (
       <p>Loading...</p>
     );
     return (
-      <Grid container spacing={20}>
+      <Grid container spacing={10}>
+        <Grid item sm={4}>
+          {placeholder}
+        </Grid>
+        <Grid item sm={4}></Grid>
         <Grid item sm={4}>
           <Profile />
-        </Grid>
-        <Grid item sm={6}>
-          {placeholder}
         </Grid>
       </Grid>
     );
