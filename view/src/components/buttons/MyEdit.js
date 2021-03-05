@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { postRow, clearErrors } from "../redux/actions/dataActions";
+import { editRow, clearErrors } from "../../redux/actions/dataActions";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import TableRow from "@material-ui/core/TableRow";
@@ -11,16 +11,16 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import EditIcon from "@material-ui/icons/Edit";
 
-class MyForm extends Component {
+class MyEdit extends Component {
   state = {
-    index: "",
-    visit: "",
-    body: "",
-    dataType: "",
-    options: [],
-    buttonType: "",
+    index: this.props.index,
+    visit: this.props.visit,
+    body: this.props.body,
+    dataType: this.props.dataType,
     errors: {},
+    open: false,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -29,10 +29,11 @@ class MyForm extends Component {
     }
     if (!nextProps.UI.errors && !nextProps.UI.loading) {
       this.setState({
-        index: "",
-        visit: "",
-        body: "",
-        dataType: "",
+        rowId: this.props.rowId,
+        index: this.props.index,
+        visit: this.props.visit,
+        body: this.props.body,
+        dataType: this.props.dataType,
         open: false,
       });
     }
@@ -57,7 +58,9 @@ class MyForm extends Component {
       dataType: this.state.dataType,
       visit: this.state.visit,
     };
-    this.props.postRow(this.props.categoryId, newRow);
+    this.props.editRow(this.props.rowId, newRow);
+    this.setState({ open: false });
+    // window.location.reload();
   };
 
   render() {
@@ -68,12 +71,12 @@ class MyForm extends Component {
       <div>
         <center>
           <Button
-            size="large"
+            size="small"
             variant="outlined"
-            color="primary"
+            style={{ color: "black" }}
             onClick={this.handleOpen}
           >
-            Add New Row
+            <EditIcon />
           </Button>
         </center>
         <Dialog
@@ -112,8 +115,8 @@ class MyForm extends Component {
                 <TableCell style={{ width: "60%" }} align="left">
                   <TextField
                     id="standard-basic"
-                    label="Body"
                     fullWidth
+                    label="Body"
                     error={errors.index ? true : false}
                     name="body"
                     value={this.state.body}
@@ -149,10 +152,9 @@ class MyForm extends Component {
   }
 }
 
-MyForm.propTypes = {
-  postRow: PropTypes.func.isRequired,
+MyEdit.propTypes = {
+  editRow: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired,
-  categoryId: PropTypes.string.isRequired,
   authenticated: PropTypes.bool.isRequired,
   clearErrors: PropTypes.func.isRequired,
 };
@@ -162,4 +164,4 @@ const mapStateToProps = (state) => ({
   authenticated: state.user.authenticated,
 });
 
-export default connect(mapStateToProps, { postRow, clearErrors })(MyForm);
+export default connect(mapStateToProps, { editRow, clearErrors })(MyEdit);

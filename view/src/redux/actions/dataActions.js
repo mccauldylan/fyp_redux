@@ -71,6 +71,34 @@ export const postRow = (categoryId, rowData) => (dispatch) => {
     });
 };
 
+export const editRow = (rowId, rowData) => (dispatch) => {
+  dispatch({ type: "LOADING_UI" });
+  axios
+    .put(`/row/${rowId}`, rowData)
+    .then((res) => {
+      dispatch({
+        type: "EDIT_ROW",
+        payload: res.data,
+      });
+      dispatch({ type: "STOP_LOADING_UI" });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const deleteRow = (rowId) => (dispatch) => {
+  dispatch({ type: "LOADING_UI" });
+  axios
+    .delete(`/row/${rowId}`)
+    .then(() => {
+      dispatch({
+        type: "DELETE_ROW",
+        payload: rowId,
+      });
+      dispatch({ type: "STOP_LOADING_UI" });
+    })
+    .catch((err) => console.log(err));
+};
+
 export const clearErrors = () => (dispatch) => {
   dispatch({ type: "CLEAR_ERRORS" });
 };

@@ -36,6 +36,17 @@ export default function (state = initialState, action) {
         ...state,
         category: [action.payload, ...state.category],
       };
+    case "EDIT_ROW":
+      return Object.assign({}, state, {
+        category: state.category.map((row) => {
+          return row.rowId === action.payload.rowId ? action.payload : row;
+        }), // replace matched item and returns the array
+      });
+    case "DELETE_ROW":
+      return {
+        ...state,
+        category: state.category.filter((row) => row.rowId !== action.payload),
+      };
     default:
       return state;
   }

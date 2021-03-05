@@ -105,9 +105,9 @@ exports.postRow = (req, res) => {
   }
 
   const newRow = {
-    index: req.index,
-    dataType: req.dataType,
-    visit: req.visit,
+    index: req.body.index,
+    dataType: req.body.dataType,
+    visit: req.body.visit,
     body: req.body.body,
     createdAt: new Date().toISOString(),
     categoryId: req.params.categoryId,
@@ -121,7 +121,6 @@ exports.postRow = (req, res) => {
       if (!doc.exists) {
         return res.status(404).json({ error: "Category not found" });
       }
-      return doc.ref.update({ rowCount: doc.data().rowCount + 1 });
     })
     .then(() => {
       return db.collection("rows").add(newRow);
@@ -158,11 +157,21 @@ exports.editRow = (req, res) => {
   if (req.body.rowId || req.body.createdAt) {
     res.status(403).json({ message: "Not allowed to edit" });
   }
+
   let document = db.collection("rows").doc(`${req.params.rowId}`);
   document
     .update(req.body)
     .then(() => {
-      res.json({ message: "Updated successfully" });
+      let rowData = {};
+      db.doc(`/rows/${req.params.rowId}`)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            rowData = doc.data();
+            rowData.rowId = doc.id;
+            res.json(rowData);
+          }
+        });
     })
     .catch((err) => {
       console.error(err);
