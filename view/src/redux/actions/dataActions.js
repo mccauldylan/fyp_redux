@@ -51,3 +51,26 @@ export const getRow = (rowId) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const postRow = (categoryId, rowData) => (dispatch) => {
+  dispatch({ type: "LOADING_UI" });
+  axios
+    .post(`/category/${categoryId}`, rowData)
+    .then((res) => {
+      dispatch({
+        type: "POST_ROW",
+        payload: res.data,
+      });
+      dispatch(clearErrors());
+    })
+    .catch((err) => {
+      dispatch({
+        type: "SET_ERRORS",
+        payload: err.response.data,
+      });
+    });
+};
+
+export const clearErrors = () => (dispatch) => {
+  dispatch({ type: "CLEAR_ERRORS" });
+};

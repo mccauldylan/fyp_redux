@@ -1,6 +1,7 @@
 const initialState = {
   categories: [],
   category: [],
+  row: {},
   loading: false,
 };
 
@@ -23,6 +24,17 @@ export default function (state = initialState, action) {
         ...state,
         category: action.payload,
         loading: false,
+      };
+    case "SET_ROW":
+      return {
+        ...state,
+        row: action.payload,
+        loading: false,
+      };
+    case "POST_ROW":
+      return {
+        ...state,
+        category: [action.payload, ...state.category],
       };
     default:
       return state;
