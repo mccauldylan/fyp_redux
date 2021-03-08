@@ -31,6 +31,25 @@ export default function (state = initialState, action) {
         ...state,
         loading: true,
       };
+    case "APPROVE_ROW":
+      return {
+        ...state,
+        approves: [
+          ...state.approves,
+          {
+            username: state.credentials.username,
+            rowId: action.payload.rowId,
+          },
+        ],
+      };
+    case "UNAPPROVE_ROW":
+      return {
+        ...state,
+        approves: state.approves.filter(
+          (approve) => approve.rowId !== action.payload.rowId
+        ),
+      };
+
     default:
       return state;
   }

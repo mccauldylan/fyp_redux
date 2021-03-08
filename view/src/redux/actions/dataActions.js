@@ -47,6 +47,7 @@ export const getRow = (rowId) => (dispatch) => {
         type: "SET_ROW",
         payload: res.data,
       });
+      console.log(res.data);
       dispatch({ type: "STOP_LOADING_UI" });
     })
     .catch((err) => console.log(err));
@@ -99,6 +100,45 @@ export const deleteRow = (rowId) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+export const approveRow = (rowId) => (dispatch) => {
+  axios
+    .get(`/row/${rowId}/like`)
+    .then((res) => {
+      dispatch({
+        type: "APPROVE_ROW",
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const unapproveRow = (rowId) => (dispatch) => {
+  axios
+    .get(`/row/${rowId}/unlike`)
+    .then((res) => {
+      dispatch({
+        type: "UNAPPROVE_ROW",
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 export const clearErrors = () => (dispatch) => {
   dispatch({ type: "CLEAR_ERRORS" });
+};
+
+//options
+export const postOption = (rowId, optionData) => (dispatch) => {
+  axios
+    .post(`/row/${rowId}/option`, optionData)
+    .then((res) => {
+      dispatch({
+        type: "POST_OPTION",
+        payload: res.data,
+      });
+      console.log(res.data);
+      dispatch({ type: "STOP_LOADING_UI" });
+    })
+    .catch((err) => console.log(err));
 };

@@ -336,7 +336,7 @@ exports.unlikeRow = (req, res) => {
           .json({ error: "Row not approved, cant un-approve" });
       } else {
         return db
-          .doc(`/approves/${data.docs[0].data().id}`)
+          .doc(`/approves/${data.docs[0].id}`)
           .delete()
           .then(() => {
             rowData.approveCount--;

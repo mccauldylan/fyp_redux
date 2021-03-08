@@ -15,6 +15,9 @@ import Paper from "@material-ui/core/Paper";
 import MyForm from "../components/MyForm";
 import MyDelete from "../components/buttons/MyDelete";
 import MyEdit from "../components/buttons/MyEdit";
+import ApproveButton from "../components/buttons/ApproveButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import MyOptions from "../components/buttons/Options/MyOptions";
 
 class document extends Component {
   componentDidMount() {
@@ -71,11 +74,15 @@ class document extends Component {
                   <TableCell align="left">{row.body}</TableCell>
                   <TableCell align="left">{row.dataType}</TableCell>
                   <TableCell align="left">
-                    {/* <MyOptions rowId={row.rowId} /> */}
+                    <MyOptions rowId={row.rowId} categoryId={categoryId} />
                   </TableCell>
-                  <TableCell align="left"></TableCell>
-                  <TableCell align="left"></TableCell>
-                  <TableCell align="left">
+                  <TableCell align="center">
+                    <ApproveButton rowId={row.rowId} />
+                    <span></span>
+                    {row.approveCount}
+                  </TableCell>
+                  <TableCell align="center"></TableCell>
+                  <TableCell align="center">
                     <MyEdit
                       index={row.index}
                       visit={row.visit}
@@ -85,7 +92,7 @@ class document extends Component {
                       categoryId={categoryId}
                     />
                   </TableCell>
-                  <TableCell align="left">
+                  <TableCell align="right">
                     <MyDelete rowId={row.rowId} />
                   </TableCell>
                 </TableRow>

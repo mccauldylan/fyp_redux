@@ -47,6 +47,20 @@ export default function (state = initialState, action) {
         ...state,
         category: state.category.filter((row) => row.rowId !== action.payload),
       };
+    case "APPROVE_ROW":
+    case "UNAPPROVE_ROW":
+      let index = state.category.findIndex(
+        (row) => row.rowId === action.payload.rowId
+      );
+      state.category[index] = action.payload;
+      return {
+        ...state,
+      };
+    case "POST_OPTION":
+      return {
+        ...state,
+        row: [action.payload, ...state.row],
+      };
     default:
       return state;
   }
