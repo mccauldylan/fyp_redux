@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { getCategory } from "../redux/actions/dataActions";
 import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -16,6 +15,9 @@ import MyForm from "../components/MyForm";
 import MyDelete from "../components/buttons/MyDelete";
 import MyEdit from "../components/buttons/MyEdit";
 import ApproveButton from "../components/buttons/ApproveButton";
+import DisapproveButton from "../components/buttons/DisapproveButton";
+import Button from "@material-ui/core/Button";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MyOptions from "../components/buttons/Options/MyOptions";
 
@@ -71,17 +73,26 @@ class document extends Component {
                 <TableRow key={row.rowId}>
                   <TableCell align="left">{row.index}</TableCell>
                   <TableCell align="left">{row.visit}</TableCell>
-                  <TableCell align="left">{row.body}</TableCell>
+                  {row.index.length > 1 ? (
+                    <TableCell align="left">
+                      <span></span>
+                      {row.body}
+                    </TableCell>
+                  ) : (
+                    <TableCell align="left">{row.body}</TableCell>
+                  )}
                   <TableCell align="left">{row.dataType}</TableCell>
                   <TableCell align="left">
                     <MyOptions rowId={row.rowId} categoryId={categoryId} />
                   </TableCell>
                   <TableCell align="center">
                     <ApproveButton rowId={row.rowId} />
-                    <span></span>
                     {row.approveCount}
                   </TableCell>
-                  <TableCell align="center"></TableCell>
+                  <TableCell align="center">
+                    <DisapproveButton rowId={row.rowId} />
+                    {row.disapproveCount}
+                  </TableCell>
                   <TableCell align="center">
                     <MyEdit
                       index={row.index}
@@ -102,6 +113,9 @@ class document extends Component {
         </Paper>
         <br></br>
         <MyForm categoryId={categoryId} />
+        <br></br>
+        <br></br>
+        <Button>Comments Section</Button>
       </div>
     ) : (
       <p>Loading...</p>
