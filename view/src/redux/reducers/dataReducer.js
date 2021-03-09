@@ -49,6 +49,8 @@ export default function (state = initialState, action) {
       };
     case "APPROVE_ROW":
     case "UNAPPROVE_ROW":
+    case "DISAPPROVE_ROW":
+    case "UNDODISAPPROVE_ROW":
       let index = state.category.findIndex(
         (row) => row.rowId === action.payload.rowId
       );

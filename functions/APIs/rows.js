@@ -35,7 +35,7 @@ exports.getCategory = (req, res) => {
           dataType: doc.data().dataType,
           visit: doc.data().visit,
           approveCount: doc.data().approveCount,
-          diapproveCount: doc.data().disapproveCount,
+          disapproveCount: doc.data().disapproveCount,
         });
       });
       return res.json(rows);
@@ -382,7 +382,7 @@ exports.undoDislikeRow = (req, res) => {
           .json({ error: "Row not disapproved, cant un-disapprove" });
       } else {
         return db
-          .doc(`/disapproves/${data.docs[0].data().id}`)
+          .doc(`/disapproves/${data.docs[0].id}`)
           .delete()
           .then(() => {
             rowData.disapproveCount--;

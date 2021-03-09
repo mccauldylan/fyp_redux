@@ -13,7 +13,6 @@ import store from "./redux/store";
 import { logoutUser, getUserData } from "./redux/actions/userActions";
 // components
 import Navbar from "./components/Navbar";
-import Table from "./components/Table";
 import AuthRoute from "./util/AuthRoute";
 
 // pages
@@ -66,7 +65,6 @@ class App extends Component {
                   <Route exact path="/" component={home} />
                   <AuthRoute exact path="/login" component={login} />
                   <AuthRoute exact path="/signup" component={signup} />
-                  <Route exact path="/Table" component={Table} />
                   <Route
                     exact
                     path="/categories/:categoryId"

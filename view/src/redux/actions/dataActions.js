@@ -124,6 +124,30 @@ export const unapproveRow = (rowId) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+export const disapproveRow = (rowId) => (dispatch) => {
+  axios
+    .get(`/row/${rowId}/dislike`)
+    .then((res) => {
+      dispatch({
+        type: "DISAPPROVE_ROW",
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const undoDisapproveRow = (rowId) => (dispatch) => {
+  axios
+    .get(`/row/${rowId}/undoDislike`)
+    .then((res) => {
+      dispatch({
+        type: "UNDODISAPPROVE_ROW",
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 export const clearErrors = () => (dispatch) => {
   dispatch({ type: "CLEAR_ERRORS" });
 };

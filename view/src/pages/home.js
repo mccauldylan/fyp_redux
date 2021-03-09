@@ -30,7 +30,7 @@ export class home extends Component {
       categories.map((category) => (
         <Paper elevation={0}>
           <List disablePadding>
-            <ListItemLink href={`/categories/${category.name}`}>
+            <ListItemLink href={`/categories/${category.categoryId}`}>
               <ListItemText primary={category.name}></ListItemText>
             </ListItemLink>
             <Divider />

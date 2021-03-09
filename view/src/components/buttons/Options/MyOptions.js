@@ -94,14 +94,16 @@ class MyOptions extends Component {
               <TableHead>
                 <TableRow>
                   <TableCell align="left" colSpan={3}>
-                    {body}
+                    <b>{body} Options:</b>
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {options?.map((option) => (
                   <TableRow>
-                    <TableCell>{option.index}</TableCell>
+                    <TableCell style={{ width: "15%" }}>
+                      {option.index}
+                    </TableCell>
                     <TableCell>{option.body}</TableCell>
                     <TableCell></TableCell>
                   </TableRow>
@@ -121,6 +123,7 @@ class MyOptions extends Component {
                     <TextField
                       id="standard-basic"
                       label="Body"
+                      fullWidth
                       name="body"
                       value={this.state.body}
                       onChange={(e) => this.handleChange(e)}

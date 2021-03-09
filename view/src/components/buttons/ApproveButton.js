@@ -6,8 +6,10 @@ import Button from "@material-ui/core/Button";
 import { approveRow, unapproveRow } from "../../redux/actions/dataActions";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+
 class ApproveButton extends Component {
-    state
+  state;
   approvedRow = () => {
     if (
       this.props.user.approves &&
@@ -30,16 +32,16 @@ class ApproveButton extends Component {
     const likeButton = !authenticated ? (
       <Link to="/login">
         <Button>
-          <FavoriteBorderIcon color="primary" />
+          <ArrowUpwardIcon />
         </Button>
       </Link>
     ) : this.approvedRow() ? (
       <Button onClick={this.unapproveRow}>
-        <FavoriteIcon color="primary" />
+        <ArrowUpwardIcon style={{ color: "green" }} />
       </Button>
     ) : (
       <Button onClick={this.approveRow}>
-        <FavoriteBorderIcon color="primary" />
+        <ArrowUpwardIcon />
       </Button>
     );
     return likeButton;

@@ -8,6 +8,7 @@ const initialState = {
   authenticated: false,
   credentials: {},
   approves: [],
+  disapproves: [],
 };
 
 export default function (state = initialState, action) {
@@ -25,6 +26,7 @@ export default function (state = initialState, action) {
         loading: false,
         credentials: action.payload.credentials,
         approves: action.payload.approves,
+        disapproves: action.payload.disapproves,
       };
     case "LOADING_USER":
       return {
@@ -42,11 +44,30 @@ export default function (state = initialState, action) {
           },
         ],
       };
+    case "DISAPPROVE_ROW":
+      return {
+        ...state,
+        disapproves: [
+          ...state.disapproves,
+          {
+            username: state.credentials.username,
+            rowId: action.payload.rowId,
+          },
+        ],
+      };
+
     case "UNAPPROVE_ROW":
       return {
         ...state,
         approves: state.approves.filter(
           (approve) => approve.rowId !== action.payload.rowId
+        ),
+      };
+    case "UNDODISAPPROVE_ROW":
+      return {
+        ...state,
+        disapproves: state.disapproves.filter(
+          (disapprove) => disapprove.rowId !== action.payload.rowId
         ),
       };
 
