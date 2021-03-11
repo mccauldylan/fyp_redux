@@ -80,6 +80,7 @@ exports.getOneRow = (req, res) => {
           index: doc.data().index,
           body: doc.data().body,
           rowId: doc.data().rowId,
+          optionId: doc.id,
         });
       });
       return res.json(rowData);

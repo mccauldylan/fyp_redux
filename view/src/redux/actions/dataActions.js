@@ -166,3 +166,18 @@ export const postOption = (rowId, optionData) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const deleteOption = (optionId) => (dispatch) => {
+  dispatch({ type: "LOADING_UI" });
+
+  axios
+    .delete(`/option/${optionId}`)
+    .then(() => {
+      dispatch({
+        type: "DELETE_ROW",
+        payload: optionId,
+      });
+      dispatch({ type: "STOP_LOADING_UI" });
+    })
+    .catch((err) => console.log(err));
+};

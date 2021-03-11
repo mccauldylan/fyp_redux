@@ -61,8 +61,26 @@ export default function (state = initialState, action) {
     case "POST_OPTION":
       return {
         ...state,
-        row: [action.payload, ...state.row],
+        row: {
+          ...state.row,
+          options: [action.payload, ...state.row.options],
+        },
       };
+    case "DELETE_OPTION":
+      let newIndex = state.row.option.findIndex(
+        (option) => option.optionId === action.payload
+      );
+      return {
+        ...state,
+        row: {
+          ...state.row,
+          options: [
+            ...state.row.options.slice(0, newIndex),
+            ...state.row.options.slice(newIndex + 1),
+          ],
+        },
+      };
+
     default:
       return state;
   }

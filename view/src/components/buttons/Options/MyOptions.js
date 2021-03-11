@@ -29,6 +29,7 @@ import {
   clearErrors,
   postOption,
 } from "../../../redux/actions/dataActions";
+import DeleteOption from "./OptionDelete";
 
 class MyOptions extends Component {
   state = {
@@ -105,40 +106,44 @@ class MyOptions extends Component {
                       {option.index}
                     </TableCell>
                     <TableCell>{option.body}</TableCell>
-                    <TableCell></TableCell>
+                    <TableCell>
+                      <DeleteOption optionId={option.optionId} />
+                    </TableCell>
                   </TableRow>
                 ))}
-                <TableRow>
-                  <TableCell>
-                    <TextField
-                      id="standard-basic"
-                      label="Index"
-                      name="index"
-                      type="number"
-                      value={this.state.index}
-                      onChange={(e) => this.handleChange(e)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <TextField
-                      id="standard-basic"
-                      label="Body"
-                      fullWidth
-                      name="body"
-                      value={this.state.body}
-                      onChange={(e) => this.handleChange(e)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={this.handleSubmit}
-                    >
-                      +
-                    </Button>
-                  </TableCell>
-                </TableRow>
+                {this.props.user.credentials.isAdmin ? (
+                  <TableRow>
+                    <TableCell>
+                      <TextField
+                        id="standard-basic"
+                        label="Index"
+                        name="index"
+                        type="number"
+                        value={this.state.index}
+                        onChange={(e) => this.handleChange(e)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <TextField
+                        id="standard-basic"
+                        label="Body"
+                        fullWidth
+                        name="body"
+                        value={this.state.body}
+                        onChange={(e) => this.handleChange(e)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={this.handleSubmit}
+                      >
+                        +
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ) : null}
               </TableBody>
             </Table>
           </TableContainer>
@@ -177,6 +182,7 @@ MyOptions.propTypes = {
 const mapStateToProps = (state) => ({
   row: state.data.row,
   UI: state.UI,
+  user: state.user,
 });
 
 const mapActionsToProps = {
