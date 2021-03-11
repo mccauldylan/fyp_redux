@@ -64,8 +64,12 @@ class document extends Component {
                 <TableCell style={{ width: "5%" }} align="left">
                   Disapprove
                 </TableCell>
-                <TableCell style={{ width: "5%" }} align="left"></TableCell>
-                <TableCell style={{ width: "5%" }} align="left"></TableCell>
+                {this.props.user.credentials.isAdmin ? (
+                  <TableCell style={{ width: "5%" }} align="left"></TableCell>
+                ) : null}
+                {this.props.user.credentials.isAdmin ? (
+                  <TableCell style={{ width: "5%" }} align="left"></TableCell>
+                ) : null}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -93,26 +97,32 @@ class document extends Component {
                     <DisapproveButton rowId={row.rowId} />
                     {row.disapproveCount}
                   </TableCell>
-                  <TableCell align="center">
-                    <MyEdit
-                      index={row.index}
-                      visit={row.visit}
-                      body={row.body}
-                      dataType={row.dataType}
-                      rowId={row.rowId}
-                      categoryId={categoryId}
-                    />
-                  </TableCell>
-                  <TableCell align="right">
-                    <MyDelete rowId={row.rowId} />
-                  </TableCell>
+                  {this.props.user.credentials.isAdmin ? (
+                    <TableCell align="center">
+                      <MyEdit
+                        index={row.index}
+                        visit={row.visit}
+                        body={row.body}
+                        dataType={row.dataType}
+                        rowId={row.rowId}
+                        categoryId={categoryId}
+                      />
+                    </TableCell>
+                  ) : null}
+                  {this.props.user.credentials.isAdmin ? (
+                    <TableCell align="center">
+                      <MyDelete rowId={row.rowId} />
+                    </TableCell>
+                  ) : null}
                 </TableRow>
               ))}
             </TableBody>
           </TableContainer>
         </Paper>
         <br></br>
-        <MyForm categoryId={categoryId} />
+        {this.props.user.credentials.isAdmin ? (
+          <MyForm categoryId={categoryId} />
+        ) : null}
         <br></br>
         <br></br>
         <Button>Comments Section</Button>
@@ -131,6 +141,7 @@ document.propTypes = {
 
 const mapStateToProps = (state) => ({
   data: state.data,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, { getCategory })(document);
