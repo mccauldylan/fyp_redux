@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/fyp_redux/static/css/main.a25f5382.chunk.css",
+    "main.js": "/fyp_redux/static/js/main.e2177aa7.chunk.js",
+    "main.js.map": "/fyp_redux/static/js/main.e2177aa7.chunk.js.map",
+    "runtime-main.js": "/fyp_redux/static/js/runtime-main.0eada288.js",
+    "runtime-main.js.map": "/fyp_redux/static/js/runtime-main.0eada288.js.map",
+    "static/js/2.ce70f129.chunk.js": "/fyp_redux/static/js/2.ce70f129.chunk.js",
+    "static/js/2.ce70f129.chunk.js.map": "/fyp_redux/static/js/2.ce70f129.chunk.js.map",
+    "index.html": "/fyp_redux/index.html",
+    "static/css/main.a25f5382.chunk.css.map": "/fyp_redux/static/css/main.a25f5382.chunk.css.map",
+    "static/js/2.ce70f129.chunk.js.LICENSE.txt": "/fyp_redux/static/js/2.ce70f129.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0eada288.js",
+    "static/js/2.ce70f129.chunk.js",
+    "static/css/main.a25f5382.chunk.css",
+    "static/js/main.e2177aa7.chunk.js"
+  ]
+}
