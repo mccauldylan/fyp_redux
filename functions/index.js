@@ -9,6 +9,7 @@ const {
   deleteRow,
   editRow,
   commentOnRow,
+  deleteComment,
   likeRow,
   dislikeRow,
   unlikeRow,
@@ -28,7 +29,8 @@ app.get("/row/:rowId", getOneRow);
 app.post("/category/:categoryId", postRow);
 app.delete("/row/:rowId", deleteRow);
 app.put("/row/:rowId", editRow);
-app.post("/row/:rowId/comment", commentOnRow);
+app.post("/row/:rowId/comment", auth, commentOnRow);
+app.delete("/comment/:commentId", deleteComment);
 app.get("/row/:rowId/like", auth, likeRow);
 app.get("/row/:rowId/dislike", auth, dislikeRow);
 app.get("/row/:rowId/unlike", auth, unlikeRow);

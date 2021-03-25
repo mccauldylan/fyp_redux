@@ -33,7 +33,7 @@ import DeleteOption from "./OptionDelete";
 
 class MyOptions extends Component {
   state = {
-    open: false,
+    openOptions: false,
     oldPath: "",
     newPath: "",
     index: "",
@@ -50,12 +50,12 @@ class MyOptions extends Component {
 
     window.history.pushState(null, null, newPath);
 
-    this.setState({ open: true, oldPath, newPath });
+    this.setState({ openOptions: true, oldPath, newPath });
     this.props.getRow(this.props.rowId);
   };
   handleClose = () => {
     window.history.pushState(null, null, this.state.oldPath);
-    this.setState({ open: false });
+    this.setState({ openOptions: false });
     this.props.clearErrors();
   };
 
@@ -156,7 +156,7 @@ class MyOptions extends Component {
           <UnfoldMore color="primary" />
         </Button>
         <Dialog
-          open={this.state.open}
+          open={this.state.openOptions}
           onClose={this.handleClose}
           fullWidth
           maxWidth="sm"

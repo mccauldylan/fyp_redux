@@ -168,16 +168,39 @@ export const postOption = (rowId, optionData) => (dispatch) => {
 };
 
 export const deleteOption = (optionId) => (dispatch) => {
-  dispatch({ type: "LOADING_UI" });
-
   axios
     .delete(`/option/${optionId}`)
     .then(() => {
       dispatch({
-        type: "DELETE_ROW",
+        type: "DELETE_OPTION",
         payload: optionId,
       });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const postComment = (rowId, commentData) => (dispatch) => {
+  axios
+    .post(`/row/${rowId}/comment`, commentData)
+    .then((res) => {
+      dispatch({
+        type: "POST_COMMENT",
+        payload: res.data,
+      });
+      console.log(res.data);
       dispatch({ type: "STOP_LOADING_UI" });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const deleteComment = (commentId) => (dispatch) => {
+  axios
+    .delete(`/comment/${commentId}`)
+    .then(() => {
+      dispatch({
+        type: "DELETE_COMMENT",
+        payload: commentId,
+      });
     })
     .catch((err) => console.log(err));
 };

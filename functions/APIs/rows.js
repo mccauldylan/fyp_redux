@@ -36,8 +36,15 @@ exports.getCategory = (req, res) => {
           visit: doc.data().visit,
           approveCount: doc.data().approveCount,
           disapproveCount: doc.data().disapproveCount,
+          validated: doc.data().validated,
         });
+        return db
+          .collection("comments")
+          .where("categoryId", "==", req.params.categoryId)
+          .orderBy("index", "asc")
+          .get();
       });
+
       return res.json(rows);
     })
     .catch((err) => {
@@ -57,6 +64,7 @@ exports.getOneRow = (req, res) => {
         return db
           .collection("comments")
           .where("rowId", "==", req.params.rowId)
+          .orderBy("createdAt", "asc")
           .get();
       } else {
         return res.status(500).json({ error: err.code });
@@ -65,7 +73,17 @@ exports.getOneRow = (req, res) => {
     .then((data) => {
       rowData.comments = [];
       data.forEach((doc) => {
-        rowData.comments.push(doc.data());
+        rowData.comments.push({
+          body: doc.data().body,
+          rowId: doc.data().rowId,
+
+          firstName: doc.data().firstName,
+          lastName: doc.data().lastName,
+          username: doc.data().username,
+          createdAt: doc.data().createdAt,
+
+          commentId: doc.id,
+        });
       });
       return db
         .collection("options")
@@ -114,6 +132,7 @@ exports.postRow = (req, res) => {
     categoryId: req.params.categoryId,
     disapproveCount: 0,
     approveCount: 0,
+    validated: false,
   };
 
   db.doc(`/categories/${req.params.categoryId}`)
@@ -191,6 +210,9 @@ exports.commentOnRow = (req, res) => {
     body: req.body.body,
     createdAt: new Date().toISOString(),
     rowId: req.params.rowId,
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    username: req.user.username,
   };
 
   db.doc(`/rows/${req.params.rowId}`)
@@ -209,6 +231,25 @@ exports.commentOnRow = (req, res) => {
     .catch((err) => {
       console.log(err);
       res.status(500).json({ error: "Something went wrong" });
+    });
+};
+
+exports.deleteComment = (req, res) => {
+  const document = db.doc(`/comments/${req.params.commentId}`);
+  document
+    .get()
+    .then((doc) => {
+      if (!doc.exists) {
+        return res.status(404).json({ error: "Row not found" });
+      }
+      return document.delete();
+    })
+    .then(() => {
+      res.json({ message: "Delete successful" });
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
     });
 };
 

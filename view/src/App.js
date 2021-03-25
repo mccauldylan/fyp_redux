@@ -20,6 +20,8 @@ import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
 import document from "./pages/document";
+import dashboard from "./pages/dashboard";
+
 import axios from "axios";
 
 const theme = createMuiTheme({
@@ -70,6 +72,7 @@ class App extends Component {
                     path="/categories/:categoryId"
                     component={document}
                   />
+                  <Route exact exact path="/dashboard" component={dashboard} />
                 </Switch>
               </div>
             </Router>

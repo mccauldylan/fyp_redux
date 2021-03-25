@@ -16,10 +16,15 @@ import MyDelete from "../components/buttons/MyDelete";
 import MyEdit from "../components/buttons/MyEdit";
 import ApproveButton from "../components/buttons/ApproveButton";
 import DisapproveButton from "../components/buttons/DisapproveButton";
+import ValidateButton from "../components/buttons/ValidateButton";
+
 import Button from "@material-ui/core/Button";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MyOptions from "../components/buttons/Options/MyOptions";
+import RowComments from "../components/buttons/RowComments/RowComments";
+
+import Comments from "../components/Comments";
 
 class document extends Component {
   componentDidMount() {
@@ -59,21 +64,26 @@ class document extends Component {
                   Options
                 </TableCell>
                 <TableCell style={{ width: "5%" }} align="left">
-                  Approve
+                  Vote to Include
                 </TableCell>
                 <TableCell style={{ width: "5%" }} align="left">
-                  Disapprove
+                  Vote to Disclude
                 </TableCell>
+                <TableCell style={{ width: "5%" }} align="center"></TableCell>
+
                 {this.props.user.credentials.isAdmin ? (
                   <TableCell style={{ width: "5%" }} align="left"></TableCell>
                 ) : null}
                 {this.props.user.credentials.isAdmin ? (
+                  <TableCell style={{ width: "5%" }} align="left"></TableCell>
+                ) : null}
+                {this.props.user.credentials.isSuperUser ? (
                   <TableCell style={{ width: "5%" }} align="left"></TableCell>
                 ) : null}
               </TableRow>
             </TableHead>
             <TableBody>
-              {category.map((row) => (
+              {category?.map((row) => (
                 <TableRow key={row.rowId}>
                   <TableCell align="left">{row.index}</TableCell>
                   <TableCell align="left">{row.visit}</TableCell>
@@ -97,6 +107,14 @@ class document extends Component {
                     <DisapproveButton rowId={row.rowId} />
                     {row.disapproveCount}
                   </TableCell>
+                  {this.props.user.credentials.isSuperUser ? (
+                    <TableCell align="center">
+                      <ValidateButton
+                        rowId={row.rowId}
+                        validated={row.validated}
+                      />
+                    </TableCell>
+                  ) : null}
                   {this.props.user.credentials.isAdmin ? (
                     <TableCell align="center">
                       <MyEdit
@@ -114,6 +132,9 @@ class document extends Component {
                       <MyDelete rowId={row.rowId} />
                     </TableCell>
                   ) : null}
+                  <TableCell>
+                    <RowComments rowId={row.rowId} categoryId={categoryId} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -124,8 +145,6 @@ class document extends Component {
           <MyForm categoryId={categoryId} />
         ) : null}
         <br></br>
-        <br></br>
-        <Button>Comments Section</Button>
       </div>
     ) : (
       <p>Loading...</p>

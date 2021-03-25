@@ -67,17 +67,31 @@ export default function (state = initialState, action) {
         },
       };
     case "DELETE_OPTION":
-      let newIndex = state.row.option.findIndex(
-        (option) => option.optionId === action.payload
-      );
       return {
         ...state,
         row: {
           ...state.row,
-          options: [
-            ...state.row.options.slice(0, newIndex),
-            ...state.row.options.slice(newIndex + 1),
-          ],
+          options: state.row.options.filter(
+            (option) => option.optionId !== action.payload
+          ),
+        },
+      };
+    case "POST_COMMENT":
+      return {
+        ...state,
+        row: {
+          ...state.row,
+          comments: [action.payload, ...state.row.comments],
+        },
+      };
+    case "DELETE_COMMENT":
+      return {
+        ...state,
+        row: {
+          ...state.row,
+          comments: state.row.comments.filter(
+            (comment) => comment.commentId !== action.payload
+          ),
         },
       };
 
