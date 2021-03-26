@@ -204,3 +204,27 @@ export const deleteComment = (commentId) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const notApplicableRow = (rowId) => (dispatch) => {
+  axios
+    .get(`/row/${rowId}/notApplicable`)
+    .then((res) => {
+      dispatch({
+        type: "NOT_APPLICABLE_ROW",
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const undoNotApplicableRow = (rowId) => (dispatch) => {
+  axios
+    .get(`/row/${rowId}/undoNotApplicable`)
+    .then((res) => {
+      dispatch({
+        type: "UNDO_NOT_APPLICABLE_ROW",
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};

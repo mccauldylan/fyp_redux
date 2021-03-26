@@ -22,10 +22,12 @@ import MyEdit from "../components/buttons/MyEdit";
 import ApproveButton from "../components/buttons/ApproveButton";
 import DisapproveButton from "../components/buttons/DisapproveButton";
 import ValidateButton from "../components/buttons/ValidateButton";
+import NaButton from "../components/buttons/NaButton";
 
 class document extends Component {
   componentDidMount() {
     const categoryId = this.props.match.params.categoryId;
+    //console.log(categoryId); is working
     this.props.getCategory(categoryId);
   }
 
@@ -66,6 +68,9 @@ class document extends Component {
                 <TableCell style={{ width: "5%" }} align="left">
                   Vote to Disclude
                 </TableCell>
+                <TableCell style={{ width: "5%" }} align="left">
+                  Vote N/A
+                </TableCell>
                 <TableCell style={{ width: "5%" }} align="center"></TableCell>
 
                 {this.props.user.credentials.isAdmin ? (
@@ -105,6 +110,10 @@ class document extends Component {
                   <TableCell align="center">
                     <DisapproveButton rowId={row.rowId} />
                     {row.disapproveCount}
+                  </TableCell>
+                  <TableCell align="center">
+                    <NaButton rowId={row.rowId} />
+                    {row.naCount}
                   </TableCell>
                   {this.props.user.credentials.isSuperUser ? (
                     <TableCell align="center">

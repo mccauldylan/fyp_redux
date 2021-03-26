@@ -36,6 +36,7 @@ exports.getCategory = (req, res) => {
           visit: doc.data().visit,
           approveCount: doc.data().approveCount,
           disapproveCount: doc.data().disapproveCount,
+          naCount: doc.data().naCount,
           validated: doc.data().validated,
         });
       });
@@ -71,12 +72,10 @@ exports.getOneRow = (req, res) => {
         rowData.comments.push({
           body: doc.data().body,
           rowId: doc.data().rowId,
-
           firstName: doc.data().firstName,
           lastName: doc.data().lastName,
           username: doc.data().username,
           createdAt: doc.data().createdAt,
-
           commentId: doc.id,
         });
       });
@@ -441,7 +440,7 @@ exports.undoDislikeRow = (req, res) => {
 
 exports.notApplicable = (req, res) => {
   const naDocument = db
-    .collection("notApplicable")
+    .collection("notApplicables")
     .where("username", "==", req.user.username)
     .where("rowId", "==", req.params.rowId)
     .limit(1);
@@ -464,7 +463,7 @@ exports.notApplicable = (req, res) => {
     .then((data) => {
       if (data.empty) {
         return db
-          .collection("notApplicable")
+          .collection("notApplicables")
           .add({
             rowId: req.params.rowId,
             username: req.user.username,
@@ -488,7 +487,7 @@ exports.notApplicable = (req, res) => {
 
 exports.undoNotApplicable = (req, res) => {
   const naDocument = db
-    .collection("notApplicable")
+    .collection("notApplicables")
     .where("username", "==", req.user.username)
     .where("rowId", "==", req.params.rowId)
     .limit(1);
@@ -515,7 +514,7 @@ exports.undoNotApplicable = (req, res) => {
           .json({ error: "Row not approved, cant un-approve" });
       } else {
         return db
-          .doc(`/notApplicable/${data.docs[0].id}`)
+          .doc(`/notApplicables/${data.docs[0].id}`)
           .delete()
           .then(() => {
             rowData.naCount--;

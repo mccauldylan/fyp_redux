@@ -51,6 +51,8 @@ export default function (state = initialState, action) {
     case "UNAPPROVE_ROW":
     case "DISAPPROVE_ROW":
     case "UNDODISAPPROVE_ROW":
+    case "NOT_APPLICABLE_ROW":
+    case "UNDO_NOT_APPLICABLE_ROW":
       let index = state.category.findIndex(
         (row) => row.rowId === action.payload.rowId
       );

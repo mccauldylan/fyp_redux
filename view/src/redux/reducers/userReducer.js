@@ -9,6 +9,7 @@ const initialState = {
   credentials: {},
   approves: [],
   disapproves: [],
+  notApplicables: [],
 };
 
 export default function (state = initialState, action) {
@@ -27,6 +28,7 @@ export default function (state = initialState, action) {
         credentials: action.payload.credentials,
         approves: action.payload.approves,
         disapproves: action.payload.disapproves,
+        notApplicables: action.payload.notApplicables,
       };
     case "LOADING_USER":
       return {
@@ -54,6 +56,25 @@ export default function (state = initialState, action) {
             rowId: action.payload.rowId,
           },
         ],
+      };
+    case "NOT_APPLICABLE_ROW":
+      return {
+        ...state,
+        notApplicables: [
+          ...state.notApplicables,
+          {
+            username: state.credentials.username,
+            rowId: action.payload.rowId,
+          },
+        ],
+      };
+
+    case "UNDO_NOT_APPLICABLE_ROW":
+      return {
+        ...state,
+        notApplicables: state.notApplicables.filter(
+          (notApplicable) => notApplicable.rowId !== action.payload.rowId
+        ),
       };
 
     case "UNAPPROVE_ROW":

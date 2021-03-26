@@ -124,6 +124,16 @@ exports.getAuthenticatedUser = (req, res) => {
       data.forEach((doc) => {
         userData.disapproves.push(doc.data());
       });
+      return db
+        .collection("notApplicables")
+        .where("username", "==", req.user.username)
+        .get();
+    })
+    .then((data) => {
+      userData.notApplicables = [];
+      data.forEach((doc) => {
+        userData.notApplicables.push(doc.data());
+      });
 
       return res.json(userData);
     })
