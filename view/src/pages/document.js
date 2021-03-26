@@ -93,7 +93,9 @@ class document extends Component {
                       {row.body}
                     </TableCell>
                   ) : (
-                    <TableCell align="left">{row.body}</TableCell>
+                    <TableCell align="left">
+                      <b>{row.body}</b>
+                    </TableCell>
                   )}
                   <TableCell align="left">{row.dataType}</TableCell>
                   <TableCell align="left">

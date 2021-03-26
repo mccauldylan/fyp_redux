@@ -38,11 +38,6 @@ exports.getCategory = (req, res) => {
           disapproveCount: doc.data().disapproveCount,
           validated: doc.data().validated,
         });
-        return db
-          .collection("comments")
-          .where("categoryId", "==", req.params.categoryId)
-          .orderBy("index", "asc")
-          .get();
       });
 
       return res.json(rows);
@@ -132,6 +127,7 @@ exports.postRow = (req, res) => {
     categoryId: req.params.categoryId,
     disapproveCount: 0,
     approveCount: 0,
+    naCount: 0,
     validated: false,
   };
 
@@ -431,6 +427,99 @@ exports.undoDislikeRow = (req, res) => {
             return rowDocument.update({
               disapproveCount: rowData.disapproveCount,
             });
+          })
+          .then(() => {
+            return res.json(rowData);
+          });
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: err.code });
+    });
+};
+
+exports.notApplicable = (req, res) => {
+  const naDocument = db
+    .collection("notApplicable")
+    .where("username", "==", req.user.username)
+    .where("rowId", "==", req.params.rowId)
+    .limit(1);
+
+  const rowDocument = db.doc(`/rows/${req.params.rowId}`);
+
+  let rowData;
+
+  rowDocument
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        rowData = doc.data();
+        rowData.rowId = doc.id;
+        return naDocument.get();
+      } else {
+        return res.status(404).json({ error: "Row not found" });
+      }
+    })
+    .then((data) => {
+      if (data.empty) {
+        return db
+          .collection("notApplicable")
+          .add({
+            rowId: req.params.rowId,
+            username: req.user.username,
+          })
+          .then(() => {
+            rowData.naCount++;
+            return rowDocument.update({ naCount: rowData.naCount });
+          })
+          .then(() => {
+            return res.json(rowData);
+          });
+      } else {
+        return res.status(400).json({ error: "Action already done" });
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: err.code });
+    });
+};
+
+exports.undoNotApplicable = (req, res) => {
+  const naDocument = db
+    .collection("notApplicable")
+    .where("username", "==", req.user.username)
+    .where("rowId", "==", req.params.rowId)
+    .limit(1);
+
+  const rowDocument = db.doc(`/rows/${req.params.rowId}`);
+
+  let rowData;
+
+  rowDocument
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        rowData = doc.data();
+        rowData.rowId = doc.id;
+        return naDocument.get();
+      } else {
+        return res.status(404).json({ error: "Row not found" });
+      }
+    })
+    .then((data) => {
+      if (data.empty) {
+        return res
+          .status(400)
+          .json({ error: "Row not approved, cant un-approve" });
+      } else {
+        return db
+          .doc(`/notApplicable/${data.docs[0].id}`)
+          .delete()
+          .then(() => {
+            rowData.naCount--;
+            return rowDocument.update({ naCount: rowData.naCount });
           })
           .then(() => {
             return res.json(rowData);

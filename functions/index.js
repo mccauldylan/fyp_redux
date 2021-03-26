@@ -14,6 +14,8 @@ const {
   dislikeRow,
   unlikeRow,
   undoDislikeRow,
+  notApplicable,
+  undoNotApplicable,
   postOption,
   deleteOption,
   editOption,
@@ -35,6 +37,9 @@ app.get("/row/:rowId/like", auth, likeRow);
 app.get("/row/:rowId/dislike", auth, dislikeRow);
 app.get("/row/:rowId/unlike", auth, unlikeRow);
 app.get("/row/:rowId/undoDislike", auth, undoDislikeRow);
+app.get("/row/:rowId/notApplicable", auth, notApplicable);
+app.get("/row/:rowId/undoNotApplicable", auth, undoNotApplicable);
+
 app.post("/row/:rowId/option", auth, postOption);
 app.delete("/option/:optionId", deleteOption);
 app.put("/option/:optionId", editOption);
