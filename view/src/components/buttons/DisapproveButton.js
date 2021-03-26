@@ -1,15 +1,17 @@
 import React, { Component } from "react";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+
+// MUI
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+
+// Redux
 import {
   disapproveRow,
   undoDisapproveRow,
 } from "../../redux/actions/dataActions";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 
 class DisapproveButton extends Component {
   state;

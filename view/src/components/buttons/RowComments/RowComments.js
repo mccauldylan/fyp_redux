@@ -1,36 +1,35 @@
 import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
-// MUI Stuff
+
+// MUI
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TextField from "@material-ui/core/TextField";
 import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 
 // Icons
 import CloseIcon from "@material-ui/icons/Close";
 import MessageOutlinedIcon from "@material-ui/icons/MessageOutlined";
+
 // Redux stuff
+import PropTypes from "prop-types";
+
 import { connect } from "react-redux";
 import {
   getRow,
   clearErrors,
   postComment,
 } from "../../../redux/actions/dataActions";
+
+// Components
 import CommentDelete from "./CommentDelete";
 
 class MyOptions extends Component {

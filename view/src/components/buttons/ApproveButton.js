@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import PropTypes from "prop-types";
+
+// MUI
 import Button from "@material-ui/core/Button";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+
+// Redux
+import PropTypes from "prop-types";
 import { approveRow, unapproveRow } from "../../redux/actions/dataActions";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 
 class ApproveButton extends Component {
   state;

@@ -1,11 +1,15 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { editRow, clearErrors } from "../../redux/actions/dataActions";
+
+// MUI
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
+
+//Redux
+import { connect } from "react-redux";
+import { editRow, clearErrors } from "../../redux/actions/dataActions";
 
 class MyEdit extends Component {
   state = {
@@ -35,18 +39,15 @@ class MyEdit extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.validated);
     let placeholder = !this.state.validated;
 
     this.setState({ validated: !placeholder, errors: {} });
-    console.log(this.state.validated);
 
     const newRow = {
       validated: placeholder,
     };
     this.props.editRow(this.props.rowId, newRow);
     this.setState({ open: false });
-    // window.location.reload();
   };
 
   render() {

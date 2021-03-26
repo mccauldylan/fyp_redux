@@ -1,30 +1,27 @@
 import React, { Component } from "react";
-import Profile from "../components/Profile";
-import { connect } from "react-redux";
-import { getCategory } from "../redux/actions/dataActions";
-import PropTypes from "prop-types";
-import Typography from "@material-ui/core/Typography";
+
+//MUI
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import MyTableHead from "../components/TableHead";
 import Paper from "@material-ui/core/Paper";
+
+// Redux
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getCategory } from "../redux/actions/dataActions";
+
+// Components
+import MyOptions from "../components/buttons/Options/MyOptions";
+import RowComments from "../components/buttons/RowComments/RowComments";
 import MyForm from "../components/MyForm";
 import MyDelete from "../components/buttons/MyDelete";
 import MyEdit from "../components/buttons/MyEdit";
 import ApproveButton from "../components/buttons/ApproveButton";
 import DisapproveButton from "../components/buttons/DisapproveButton";
 import ValidateButton from "../components/buttons/ValidateButton";
-
-import Button from "@material-ui/core/Button";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import MyOptions from "../components/buttons/Options/MyOptions";
-import RowComments from "../components/buttons/RowComments/RowComments";
-
-import Comments from "../components/Comments";
 
 class document extends Component {
   componentDidMount() {

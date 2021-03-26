@@ -11,6 +11,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { logoutUser, getUserData } from "./redux/actions/userActions";
+
 // components
 import Navbar from "./components/Navbar";
 import AuthRoute from "./util/AuthRoute";

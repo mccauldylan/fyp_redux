@@ -1,6 +1,10 @@
 import React, { Component } from "react";
+
+// Redux
 import { connect } from "react-redux";
 import { editRow, clearErrors } from "../../redux/actions/dataActions";
+
+// MUI
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import TableRow from "@material-ui/core/TableRow";
