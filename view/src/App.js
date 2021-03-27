@@ -25,6 +25,8 @@ import dashboard from "./pages/dashboard";
 
 import axios from "axios";
 
+axios.defaults.baseURL = "https://us-central1-mnd-redux.cloudfunctions.net/api";
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -65,7 +67,6 @@ class App extends Component {
               <div className="container">
                 <Navbar />
                 <Switch>
-                  <Route exact path="/" component={home} />
                   <AuthRoute exact path="/login" component={login} />
                   <AuthRoute exact path="/signup" component={signup} />
                   <Route
@@ -74,6 +75,7 @@ class App extends Component {
                     component={document}
                   />
                   <Route exact exact path="/dashboard" component={dashboard} />
+                  <Route exact path="/" component={home} />
                 </Switch>
               </div>
             </Router>
