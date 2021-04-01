@@ -145,7 +145,6 @@ exports.getAuthenticatedUser = (req, res) => {
 
 exports.editUserDetails = (req, res) => {
   let userData = {};
-
   db.doc(`/users/${req.user.username}`)
     .update(req.body)
     .then(() => {

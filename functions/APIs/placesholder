@@ -51,3 +51,26 @@ exports.getAuthenticatedUser = (req, res) => {
         return res.status(500).json({ error: err.code });
       });
   };
+
+  exports.editUserDetails = (req, res) => {
+  let userData = {};
+
+  db.doc(`/users/${req.user.username}`)
+    .update(req.body)
+    .then(() => {
+      db.doc(`/users/${req.user.username}`)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            userData = doc.data();
+            res.json(userData);
+          }
+        });
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({
+        error: err.code,
+      });
+    });
+};
