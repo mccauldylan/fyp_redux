@@ -24,7 +24,12 @@ const {
   getOneRow,
 } = require("./APIs/rows");
 
-const { loginUser, signUpUser, getAuthenticatedUser } = require("./APIs/users");
+const {
+  loginUser,
+  signUpUser,
+  getAuthenticatedUser,
+  editUserDetails,
+} = require("./APIs/users");
 
 // rows
 app.get("/category/", getCategories);
@@ -50,5 +55,6 @@ app.put("/option/:optionId", editOption);
 app.post("/login", loginUser);
 app.post("/signup", signUpUser);
 app.get("/user", auth, getAuthenticatedUser);
+app.put("/user/", auth, editUserDetails);
 
 exports.api = functions.https.onRequest(app);

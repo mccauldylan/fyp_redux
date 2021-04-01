@@ -87,9 +87,8 @@ class MyForm extends Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Add New Row</DialogTitle>
           <DialogContent>
-            <DialogContentText>Placeholder</DialogContentText>
+            <DialogContentText>Add New Row</DialogContentText>
             <form onSubmit={this.handleSubmit}>
               <TableRow>
                 <TableCell style={{ width: "10%" }} align="left">
