@@ -26,7 +26,7 @@ const styles = (theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#ff6333",
   },
   form: {
     width: "100%",

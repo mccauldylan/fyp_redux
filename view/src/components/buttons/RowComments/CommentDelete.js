@@ -31,7 +31,7 @@ export class CommentDelete extends Component {
     return (
       <Fragment>
         <Button onClick={this.handleOpen}>
-          <HighlightOffIcon style={{ color: "red" }} />
+          <HighlightOffIcon style={{ color: "black" }} />
         </Button>
         <Dialog
           open={this.state.open}

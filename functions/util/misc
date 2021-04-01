@@ -1,0 +1,8 @@
+counter{
+    state{
+        count:0
+    }
+    return{
+        <button onClick={state.count = state.count +1}>count</button>
+    }
+}

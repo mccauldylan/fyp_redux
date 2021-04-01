@@ -39,7 +39,7 @@ class ApproveButton extends Component {
       </Link>
     ) : this.approvedRow() ? (
       <Button onClick={this.unapproveRow}>
-        <ArrowUpwardIcon style={{ color: "green" }} />
+        <ArrowUpwardIcon style={{ color: "66ff66" }} />
       </Button>
     ) : (
       <Button onClick={this.approveRow}>

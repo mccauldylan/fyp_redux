@@ -7,6 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 // Redux
 import PropTypes from "prop-types";
@@ -24,10 +25,26 @@ import DisapproveButton from "../components/buttons/DisapproveButton";
 import ValidateButton from "../components/buttons/ValidateButton";
 import NaButton from "../components/buttons/NaButton";
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: "#00bcd4",
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 class document extends Component {
   componentDidMount() {
     const categoryId = this.props.match.params.categoryId;
-    //console.log(categoryId); is working
     this.props.getCategory(categoryId);
   }
 
@@ -37,94 +54,106 @@ class document extends Component {
     const { category, loading } = this.props.data;
     let placeholder = !loading ? (
       <div>
-        <center>
-          <h1>{categoryId}</h1>
-          <h1> </h1>
-        </center>
+        <div>
+          <center>
+            <h2>{categoryId}</h2>
+          </center>
+        </div>
 
-        <br></br>
         <Paper>
           <TableContainer>
             <TableHead>
-              <TableRow>
-                <TableCell style={{ width: "5%" }} align="left">
+              <StyledTableRow>
+                <StyledTableCell style={{ width: "5%" }} align="left">
                   Index
-                </TableCell>
-                <TableCell style={{ width: "10%" }} align="left">
+                </StyledTableCell>
+                <StyledTableCell style={{ width: "10%" }} align="left">
                   Clinic Visit
-                </TableCell>
-                <TableCell style={{ width: "40%" }} align="left">
-                  Info
-                </TableCell>
-                <TableCell style={{ width: "10%" }} align="left">
+                </StyledTableCell>
+                <StyledTableCell style={{ width: "40%" }} align="left">
+                  Question
+                </StyledTableCell>
+                <StyledTableCell style={{ width: "10%" }} align="left">
                   Datatype
-                </TableCell>
-                <TableCell style={{ width: "10%" }} align="left">
+                </StyledTableCell>
+                <StyledTableCell style={{ width: "10%" }} align="left">
                   Options
-                </TableCell>
-                <TableCell style={{ width: "5%" }} align="left">
+                </StyledTableCell>
+                <StyledTableCell style={{ width: "5%" }} align="left">
                   Vote to Include
-                </TableCell>
-                <TableCell style={{ width: "5%" }} align="left">
-                  Vote to Disclude
-                </TableCell>
-                <TableCell style={{ width: "5%" }} align="left">
+                </StyledTableCell>
+                <StyledTableCell style={{ width: "5%" }} align="left">
+                  Vote to Exclude
+                </StyledTableCell>
+                <StyledTableCell style={{ width: "5%" }} align="left">
                   Vote N/A
-                </TableCell>
-                <TableCell style={{ width: "5%" }} align="center"></TableCell>
+                </StyledTableCell>
+                <StyledTableCell
+                  style={{ width: "5%" }}
+                  align="center"
+                ></StyledTableCell>
 
                 {this.props.user.credentials.isAdmin ? (
-                  <TableCell style={{ width: "5%" }} align="left"></TableCell>
+                  <StyledTableCell
+                    style={{ width: "5%" }}
+                    align="left"
+                  ></StyledTableCell>
                 ) : null}
                 {this.props.user.credentials.isAdmin ? (
-                  <TableCell style={{ width: "5%" }} align="left"></TableCell>
+                  <StyledTableCell
+                    style={{ width: "5%" }}
+                    align="left"
+                  ></StyledTableCell>
                 ) : null}
                 {this.props.user.credentials.isSuperUser ? (
-                  <TableCell style={{ width: "5%" }} align="left"></TableCell>
+                  <StyledTableCell
+                    style={{ width: "5%" }}
+                    align="left"
+                  ></StyledTableCell>
                 ) : null}
-              </TableRow>
+              </StyledTableRow>
             </TableHead>
             <TableBody>
               {category?.map((row) => (
-                <TableRow key={row.rowId}>
-                  <TableCell align="left">{row.index}</TableCell>
-                  <TableCell align="left">{row.visit}</TableCell>
+                <StyledTableRow key={row.rowId}>
+                  <StyledTableCell align="left">{row.index}</StyledTableCell>
+                  <StyledTableCell align="left">{row.visit}</StyledTableCell>
                   {row.index.length > 1 ? (
-                    <TableCell align="left">
+                    <StyledTableCell align="left">
                       <span></span>
-                      {row.body}
-                    </TableCell>
-                  ) : (
-                    <TableCell align="left">
                       <b>{row.body}</b>
-                    </TableCell>
+                    </StyledTableCell>
+                  ) : (
+                    <StyledTableCell align="left">
+                      <b>{row.body}</b>
+                    </StyledTableCell>
                   )}
-                  <TableCell align="left">{row.dataType}</TableCell>
-                  <TableCell align="left">
+                  <StyledTableCell align="left">{row.dataType}</StyledTableCell>
+                  <StyledTableCell align="left">
                     <MyOptions rowId={row.rowId} categoryId={categoryId} />
-                  </TableCell>
-                  <TableCell align="center">
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
                     <ApproveButton rowId={row.rowId} />
                     {row.approveCount}
-                  </TableCell>
-                  <TableCell align="center">
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
                     <DisapproveButton rowId={row.rowId} />
                     {row.disapproveCount}
-                  </TableCell>
-                  <TableCell align="center">
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
                     <NaButton rowId={row.rowId} />
                     {row.naCount}
-                  </TableCell>
+                  </StyledTableCell>
                   {this.props.user.credentials.isSuperUser ? (
-                    <TableCell align="center">
+                    <StyledTableCell align="center">
                       <ValidateButton
                         rowId={row.rowId}
                         validated={row.validated}
                       />
-                    </TableCell>
+                    </StyledTableCell>
                   ) : null}
                   {this.props.user.credentials.isAdmin ? (
-                    <TableCell align="center">
+                    <StyledTableCell align="center">
                       <MyEdit
                         index={row.index}
                         visit={row.visit}
@@ -133,17 +162,17 @@ class document extends Component {
                         rowId={row.rowId}
                         categoryId={categoryId}
                       />
-                    </TableCell>
+                    </StyledTableCell>
                   ) : null}
-                  {this.props.user.credentials.isAdmin ? (
-                    <TableCell align="center">
-                      <MyDelete rowId={row.rowId} />
-                    </TableCell>
-                  ) : null}
-                  <TableCell>
+                  <StyledTableCell>
                     <RowComments rowId={row.rowId} categoryId={categoryId} />
-                  </TableCell>
-                </TableRow>
+                  </StyledTableCell>
+                  {this.props.user.credentials.isAdmin ? (
+                    <StyledTableCell align="center">
+                      <MyDelete rowId={row.rowId} />
+                    </StyledTableCell>
+                  ) : null}
+                </StyledTableRow>
               ))}
             </TableBody>
           </TableContainer>

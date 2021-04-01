@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Link from "react-router-dom/Link";
 
 // MUI
 import Grid from "@material-ui/core/Grid";
@@ -10,14 +11,19 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import TableRow from "@material-ui/core/TableRow";
-
+import { FixedSizeList } from "react-window";
 // Redux
 import { connect } from "react-redux";
 import { getCategories } from "../redux/actions/dataActions";
 
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     width: "100%",
+//     height: 400,
+//     maxWidth: 300,
+//     backgroundColor: theme.palette.background.paper,
+//   },
+// }));
 
 export class home extends Component {
   componentDidMount() {
@@ -28,14 +34,16 @@ export class home extends Component {
     const { categories, loading } = this.props.data;
     let placeholder = !loading ? (
       categories.map((category) => (
-        <Paper elevation={0}>
-          <List disablePadding>
-            <ListItemLink href={`/categories/${category.categoryId}`}>
-              <ListItemText primary={category.name}></ListItemText>
-            </ListItemLink>
-            <Divider />
-          </List>
-        </Paper>
+        <List disablePadding>
+          <ListItem
+            button
+            component={Link}
+            to={`/categories/${category.categoryId}`}
+          >
+            <ListItemText primary={category.name}></ListItemText>
+          </ListItem>
+          <Divider />
+        </List>
       ))
     ) : (
       <p>Loading...</p>
@@ -43,11 +51,11 @@ export class home extends Component {
     return (
       <Grid container spacing={10}>
         <Grid item sm={4}>
-          {placeholder}
+          <Profile />
         </Grid>
         <Grid item sm={4}></Grid>
         <Grid item sm={4}>
-          <Profile />
+          {placeholder}
         </Grid>
       </Grid>
     );

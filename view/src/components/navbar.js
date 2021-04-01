@@ -1,5 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Link from "react-router-dom/Link";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 //MUI
 import Appbar from "@material-ui/core/Appbar";
@@ -8,25 +10,42 @@ import Button from "@material-ui/core/Button";
 
 export class navbar extends Component {
   render() {
+    const { user: authenticated } = this.props;
     return (
       <Appbar>
         <Toolbar className="nav-container">
-          <Button color="inherit" component={Link} to="/login">
-            Login
-          </Button>
-          <Button color="inherit" component={Link} to="/">
-            Home
-          </Button>
-          <Button color="inherit" component={Link} to="/signup">
-            Signup
-          </Button>
-          <Button color="inherit" component={Link} to="/dashboard">
-            Dashboard
-          </Button>
+          {authenticated ? (
+            <Fragment>
+              <Button color="inherit" component={Link} to="/">
+                Home
+              </Button>
+              <Button color="inherit" component={Link} to="/dashboard">
+                Dashboard
+              </Button>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Button color="inherit" component={Link} to="/">
+                Home
+              </Button>
+
+              <Button color="inherit" component={Link} to="/dashboard">
+                Dashboard
+              </Button>
+            </Fragment>
+          )}
         </Toolbar>
       </Appbar>
     );
   }
 }
 
-export default navbar;
+navbar.propTypes = {
+  authenticated: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  authenticated: state.user.authenticated,
+});
+
+export default connect(mapStateToProps)(navbar);

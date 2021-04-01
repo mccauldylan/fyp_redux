@@ -1,0 +1,54 @@
+categories
+{
+    categoryID
+    {
+        index: category.index
+        name: category.name
+    }
+}
+
+rows (data items)
+{
+    rowID
+    {
+        index: row.index
+        visit: row.visit
+        body: row.body
+        dataType: row.dataType
+        votesForCount: row.votesForCount
+        votesAgainstCount: row.votesAgainstCount
+        naVotesCount: row.naVotesCount
+        isValidated: row.isValidated
+    }
+}
+
+rowOptions
+{
+    rowOptionsId
+    {
+        rowId: option.rowId
+        index: option.index
+        body: option.body
+    }
+}
+
+votesFor/votesAgainst/naVotesCount
+{
+    voteId
+    {
+        rowId: vote.rowId
+        username: vote.username  
+    }
+}
+
+rowComments
+{
+    commentId
+    {
+        body: comment.body
+        createdAt: comment.createdAt
+        firstName: comment.firstName
+        lastName: comment.lastName
+        username: comment.username
+    }
+}

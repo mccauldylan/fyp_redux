@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import dayjs from "dayjs";
 
 // MUI
 import Dialog from "@material-ui/core/Dialog";
@@ -14,6 +15,13 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import IconButton from "@material-ui/core/IconButton";
+
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
 // Icons
 import CloseIcon from "@material-ui/icons/Close";
@@ -90,8 +98,10 @@ class MyOptions extends Component {
       </div>
     ) : (
       <div>
-        <h2>{body}</h2>
-        <h3>Comments</h3>
+        <center>
+          <h2>{body}</h2>
+          <h2>Comments</h2>
+        </center>
 
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -99,31 +109,39 @@ class MyOptions extends Component {
               <List fullwidth>
                 {comments?.map((comment) => (
                   <div>
-                    <Paper>
-                      <Table fullwidth>
-                        <TableRow fullWidth>
-                          <TableCell
-                            style={{ width: "90%" }}
-                            align="right"
-                            fullWidth
+                    <Card elevation={0}>
+                      <CardHeader
+                        action={
+                          comment.username === username ? (
+                            <IconButton aria-label="settings">
+                              <CommentDelete />
+                            </IconButton>
+                          ) : null
+                        }
+                        title={
+                          <Typography color="textSecondary" gutterBottom>
+                            {comment.firstName} {comment.lastName}
+                          </Typography>
+                        }
+                        subheader={
+                          <Typography
+                            variant="body2"
+                            component="p"
+                            color="textSecondary"
                           >
-                            <ListItem fullwidth>
-                              <ListItemText
-                                fullwidth
-                                primary={comment.firstName}
-                                secondary={comment.body}
-                              />
-                            </ListItem>
-                          </TableCell>
-                          <TableCell align="right">
-                            {username === comment.username ? (
-                              <CommentDelete commentId={comment.commentId} />
-                            ) : null}
-                          </TableCell>
-                        </TableRow>
-                      </Table>
-                      {/* <Divider /> */}
-                    </Paper>
+                            {dayjs(comment.createdAt).format(
+                              "h:mm a, MMMM DD YYYY"
+                            )}
+                          </Typography>
+                        }
+                      />
+                      <CardContent>
+                        <Typography variant="body2" component="p">
+                          {comment.body}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                    <Divider />
                   </div>
                 ))}
               </List>
@@ -142,6 +160,7 @@ class MyOptions extends Component {
                   maxWidth="sm"
                 />
                 <center>
+                  <br></br>
                   <Button
                     variant="outlined"
                     color="primary"
