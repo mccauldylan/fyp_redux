@@ -27,7 +27,7 @@ import NaButton from "../components/buttons/NaButton";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: "#00bcd4",
+    backgroundColor: "#00bcd1",
     color: theme.palette.common.white,
   },
   body: {
