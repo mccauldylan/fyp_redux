@@ -39,6 +39,9 @@ class Profile extends Component {
                 <Typography color="textSecondary">
                   {credentials.profession}
                 </Typography>
+                <Typography color="textSecondary">
+                  Role: {credentials.isAdmin ? "Admin" : "Validator"}
+                </Typography>
               </CardContent>
               <CardActions>
                 <Button

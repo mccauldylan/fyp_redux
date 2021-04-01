@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Link from "react-router-dom/Link";
+import Profile from "../components/Profile";
+import RoleChange from "../components/buttons/RoleChange";
 
 // MUI
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Profile from "../components/Profile";
 import PropTypes from "prop-types";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -12,9 +13,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import TableRow from "@material-ui/core/TableRow";
 import { FixedSizeList } from "react-window";
+
+import ListSubheader from "@material-ui/core/ListSubheader";
 // Redux
 import { connect } from "react-redux";
 import { getCategories } from "../redux/actions/dataActions";
+import { ListItemAvatar } from "@material-ui/core";
 
 // const useStyles = makeStyles((theme) => ({
 //   root: {
@@ -48,14 +52,36 @@ export class home extends Component {
     ) : (
       <p>Loading...</p>
     );
+
+    let categoriesText = !loading ? "Categories" : null;
+    let text = !loading
+      ? "**NOTE TO REVIEWER: This section deals with meta data relevant to the TCD MND Registry. There are 9 Sections in total."
+      : null;
+
     return (
-      <Grid container spacing={10}>
+      <Grid container spacing={8}>
+        <Grid item sm={4}>
+          {/* <center>
+            <h3>{categoriesText}</h3>
+          </center> */}
+
+          <Paper style={{ height: 520, overflow: "auto" }}>
+            <List disablePadding>
+              <ListSubheader style={{ textAlign: "center" }}>
+                {categoriesText}
+              </ListSubheader>
+              <Divider />
+            </List>
+            {placeholder}
+          </Paper>
+        </Grid>
+        <Grid item sm={4}>
+          {text}
+        </Grid>
+
         <Grid item sm={4}>
           <Profile />
-        </Grid>
-        <Grid item sm={4}></Grid>
-        <Grid item sm={4}>
-          {placeholder}
+          <RoleChange />
         </Grid>
       </Grid>
     );

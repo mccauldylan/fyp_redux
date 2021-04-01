@@ -51,6 +51,20 @@ export const getUserData = () => (dispatch) => {
   });
 };
 
+export const editUser = (userData) => (dispatch) => {
+  dispatch({ type: "LOADING_UI" });
+  axios
+    .put("/user", userData)
+    .then((res) => {
+      dispatch({
+        type: "EDIT_USER",
+        payload: res.data,
+      });
+      dispatch({ type: "STOP_LOADING_UI" });
+    })
+    .catch((err) => console.log(err));
+};
+
 const setAuthorizationHeader = (token) => {
   const FBIdToken = `Bearer ${token}`;
   localStorage.setItem("FBIdToken", FBIdToken);

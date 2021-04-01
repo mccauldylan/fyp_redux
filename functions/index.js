@@ -55,6 +55,6 @@ app.put("/option/:optionId", editOption);
 app.post("/login", loginUser);
 app.post("/signup", signUpUser);
 app.get("/user", auth, getAuthenticatedUser);
-app.put("/user/", auth, editUserDetails);
+app.put("/user", auth, editUserDetails);
 
 exports.api = functions.https.onRequest(app);

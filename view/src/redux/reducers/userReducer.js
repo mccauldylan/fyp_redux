@@ -91,6 +91,11 @@ export default function (state = initialState, action) {
           (disapprove) => disapprove.rowId !== action.payload.rowId
         ),
       };
+    case "EDIT_USER":
+      return {
+        ...state,
+        credentials: action.payload,
+      };
 
     default:
       return state;
