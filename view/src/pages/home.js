@@ -13,6 +13,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import TableRow from "@material-ui/core/TableRow";
 import { FixedSizeList } from "react-window";
+import Typography from "@material-ui/core/Typography";
 
 import ListSubheader from "@material-ui/core/ListSubheader";
 // Redux
@@ -53,13 +54,23 @@ export class home extends Component {
       <p>Loading...</p>
     );
 
-    let categoriesText = !loading ? "Categories" : null;
+    let categoriesText = !loading ? (
+      <Typography variant="h6" component="h5">
+        Categories
+      </Typography>
+    ) : null;
     let text = !loading
       ? "**NOTE TO REVIEWER: This section deals with meta data relevant to the TCD MND Registry. There are 9 Sections in total."
       : null;
 
     return (
       <Grid container spacing={8}>
+        <Grid item sm={4}>
+          <Profile />
+        </Grid>
+        <Grid item sm={4}>
+          {text}
+        </Grid>
         <Grid item sm={4}>
           {/* <center>
             <h3>{categoriesText}</h3>
@@ -74,14 +85,6 @@ export class home extends Component {
             </List>
             {placeholder}
           </Paper>
-        </Grid>
-        <Grid item sm={4}>
-          {text}
-        </Grid>
-
-        <Grid item sm={4}>
-          <Profile />
-          <RoleChange />
         </Grid>
       </Grid>
     );

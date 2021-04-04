@@ -42,7 +42,6 @@ class RoleChange extends Component {
         <center>
           <Button
             size="small"
-            variant="outlined"
             style={{ color: "black" }}
             onClick={this.handleSubmit}
           >

@@ -8,6 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 // Redux
 import PropTypes from "prop-types";
@@ -27,8 +28,8 @@ import NaButton from "../components/buttons/NaButton";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: "#00bcd1",
-    color: theme.palette.common.white,
+    backgroundColor: "#fff",
+    color: theme.palette.common.black,
   },
   body: {
     fontSize: 14,
@@ -54,15 +55,18 @@ class document extends Component {
     const { category, loading } = this.props.data;
     let placeholder = !loading ? (
       <div>
-        <div>
-          <center>
-            <h2>{categoryId}</h2>
-          </center>
-        </div>
-
         <Paper>
           <TableContainer>
             <TableHead>
+              <TableRow>
+                <TableCell colSpan={11} style={{ backgroundColor: "white" }}>
+                  <center>
+                    <Typography variant="h5" component="h2">
+                      {categoryId}
+                    </Typography>
+                  </center>
+                </TableCell>
+              </TableRow>
               <StyledTableRow>
                 <StyledTableCell style={{ width: "5%" }} align="left">
                   Index

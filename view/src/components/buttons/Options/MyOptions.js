@@ -102,9 +102,11 @@ class MyOptions extends Component {
                       {option.index}
                     </TableCell>
                     <TableCell>{option.body}</TableCell>
-                    <TableCell>
-                      <DeleteOption optionId={option.optionId} />
-                    </TableCell>
+                    {this.props.user.credentials.isAdmin ? (
+                      <TableCell>
+                        <DeleteOption optionId={option.optionId} />
+                      </TableCell>
+                    ) : null}
                   </TableRow>
                 ))}
                 {this.props.user.credentials.isAdmin ? (
