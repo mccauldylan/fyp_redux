@@ -14,6 +14,8 @@ import { logoutUser, getUserData } from "./redux/actions/userActions";
 
 // components
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
 import AuthRoute from "./util/AuthRoute";
 
 // pages
@@ -31,7 +33,7 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       light: "#33c9dc",
-      main: "#00bcd4",
+      main: "#4da6ff",
       dark: "#008394",
       contrastText: "#fff",
     },
@@ -80,6 +82,7 @@ class App extends Component {
               </div>
             </Router>
           </div>
+          <Footer />
         </Provider>
       </MuiThemeProvider>
     );

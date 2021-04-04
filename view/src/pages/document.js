@@ -43,6 +43,7 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
+
 class document extends Component {
   componentDidMount() {
     const categoryId = this.props.match.params.categoryId;
@@ -55,132 +56,130 @@ class document extends Component {
     const { category, loading } = this.props.data;
     let placeholder = !loading ? (
       <div>
-        <Paper>
-          <TableContainer>
-            <TableHead>
-              <TableRow>
-                <TableCell colSpan={11} style={{ backgroundColor: "white" }}>
-                  <center>
-                    <Typography variant="h5" component="h2">
-                      {categoryId}
-                    </Typography>
-                  </center>
-                </TableCell>
-              </TableRow>
-              <StyledTableRow>
-                <StyledTableCell style={{ width: "5%" }} align="left">
-                  Index
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "10%" }} align="left">
-                  Clinic Visit
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "40%" }} align="left">
-                  Question
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "10%" }} align="left">
-                  Datatype
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "10%" }} align="left">
-                  Options
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "5%" }} align="left">
-                  Vote to Include
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "5%" }} align="left">
-                  Vote to Exclude
-                </StyledTableCell>
-                <StyledTableCell style={{ width: "5%" }} align="left">
-                  Vote N/A
-                </StyledTableCell>
+        <TableContainer>
+          <TableHead>
+            <TableRow>
+              <TableCell colSpan={11} style={{ backgroundColor: "white" }}>
+                <center>
+                  <Typography variant="h5" component="h2">
+                    {categoryId}
+                  </Typography>
+                </center>
+              </TableCell>
+            </TableRow>
+            <StyledTableRow>
+              <StyledTableCell style={{ width: "5%" }} align="left">
+                Index
+              </StyledTableCell>
+              <StyledTableCell style={{ width: "10%" }} align="left">
+                Clinic Visit
+              </StyledTableCell>
+              <StyledTableCell style={{ width: "40%" }} align="left">
+                Question
+              </StyledTableCell>
+              <StyledTableCell style={{ width: "10%" }} align="left">
+                Datatype
+              </StyledTableCell>
+              <StyledTableCell style={{ width: "10%" }} align="left">
+                Options
+              </StyledTableCell>
+              <StyledTableCell style={{ width: "5%" }} align="left">
+                Vote to Include
+              </StyledTableCell>
+              <StyledTableCell style={{ width: "5%" }} align="left">
+                Vote to Exclude
+              </StyledTableCell>
+              <StyledTableCell style={{ width: "5%" }} align="left">
+                Vote N/A
+              </StyledTableCell>
+              <StyledTableCell
+                style={{ width: "5%" }}
+                align="center"
+              ></StyledTableCell>
+
+              {this.props.user.credentials.isAdmin ? (
                 <StyledTableCell
                   style={{ width: "5%" }}
-                  align="center"
+                  align="left"
                 ></StyledTableCell>
-
-                {this.props.user.credentials.isAdmin ? (
-                  <StyledTableCell
-                    style={{ width: "5%" }}
-                    align="left"
-                  ></StyledTableCell>
-                ) : null}
-                {this.props.user.credentials.isAdmin ? (
-                  <StyledTableCell
-                    style={{ width: "5%" }}
-                    align="left"
-                  ></StyledTableCell>
-                ) : null}
+              ) : null}
+              {this.props.user.credentials.isAdmin ? (
+                <StyledTableCell
+                  style={{ width: "5%" }}
+                  align="left"
+                ></StyledTableCell>
+              ) : null}
+              {this.props.user.credentials.isSuperUser ? (
+                <StyledTableCell
+                  style={{ width: "5%" }}
+                  align="left"
+                ></StyledTableCell>
+              ) : null}
+            </StyledTableRow>
+          </TableHead>
+          <TableBody>
+            {category?.map((row) => (
+              <StyledTableRow key={row.rowId}>
+                <StyledTableCell align="left">{row.index}</StyledTableCell>
+                <StyledTableCell align="left">{row.visit}</StyledTableCell>
+                {row.index.length > 1 ? (
+                  <StyledTableCell align="left">
+                    <span></span>
+                    <b>{row.body}</b>
+                  </StyledTableCell>
+                ) : (
+                  <StyledTableCell align="left">
+                    <b>{row.body}</b>
+                  </StyledTableCell>
+                )}
+                <StyledTableCell align="left">{row.dataType}</StyledTableCell>
+                <StyledTableCell align="left">
+                  <MyOptions rowId={row.rowId} categoryId={categoryId} />
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <ApproveButton rowId={row.rowId} />
+                  {row.approveCount}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <DisapproveButton rowId={row.rowId} />
+                  {row.disapproveCount}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <NaButton rowId={row.rowId} />
+                  {row.naCount}
+                </StyledTableCell>
                 {this.props.user.credentials.isSuperUser ? (
-                  <StyledTableCell
-                    style={{ width: "5%" }}
-                    align="left"
-                  ></StyledTableCell>
+                  <StyledTableCell align="center">
+                    <ValidateButton
+                      rowId={row.rowId}
+                      validated={row.validated}
+                    />
+                  </StyledTableCell>
+                ) : null}
+                {this.props.user.credentials.isAdmin ? (
+                  <StyledTableCell align="center">
+                    <MyEdit
+                      index={row.index}
+                      visit={row.visit}
+                      body={row.body}
+                      dataType={row.dataType}
+                      rowId={row.rowId}
+                      categoryId={categoryId}
+                    />
+                  </StyledTableCell>
+                ) : null}
+                <StyledTableCell>
+                  <RowComments rowId={row.rowId} categoryId={categoryId} />
+                </StyledTableCell>
+                {this.props.user.credentials.isAdmin ? (
+                  <StyledTableCell align="center">
+                    <MyDelete rowId={row.rowId} />
+                  </StyledTableCell>
                 ) : null}
               </StyledTableRow>
-            </TableHead>
-            <TableBody>
-              {category?.map((row) => (
-                <StyledTableRow key={row.rowId}>
-                  <StyledTableCell align="left">{row.index}</StyledTableCell>
-                  <StyledTableCell align="left">{row.visit}</StyledTableCell>
-                  {row.index.length > 1 ? (
-                    <StyledTableCell align="left">
-                      <span></span>
-                      <b>{row.body}</b>
-                    </StyledTableCell>
-                  ) : (
-                    <StyledTableCell align="left">
-                      <b>{row.body}</b>
-                    </StyledTableCell>
-                  )}
-                  <StyledTableCell align="left">{row.dataType}</StyledTableCell>
-                  <StyledTableCell align="left">
-                    <MyOptions rowId={row.rowId} categoryId={categoryId} />
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <ApproveButton rowId={row.rowId} />
-                    {row.approveCount}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <DisapproveButton rowId={row.rowId} />
-                    {row.disapproveCount}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <NaButton rowId={row.rowId} />
-                    {row.naCount}
-                  </StyledTableCell>
-                  {this.props.user.credentials.isSuperUser ? (
-                    <StyledTableCell align="center">
-                      <ValidateButton
-                        rowId={row.rowId}
-                        validated={row.validated}
-                      />
-                    </StyledTableCell>
-                  ) : null}
-                  {this.props.user.credentials.isAdmin ? (
-                    <StyledTableCell align="center">
-                      <MyEdit
-                        index={row.index}
-                        visit={row.visit}
-                        body={row.body}
-                        dataType={row.dataType}
-                        rowId={row.rowId}
-                        categoryId={categoryId}
-                      />
-                    </StyledTableCell>
-                  ) : null}
-                  <StyledTableCell>
-                    <RowComments rowId={row.rowId} categoryId={categoryId} />
-                  </StyledTableCell>
-                  {this.props.user.credentials.isAdmin ? (
-                    <StyledTableCell align="center">
-                      <MyDelete rowId={row.rowId} />
-                    </StyledTableCell>
-                  ) : null}
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </TableContainer>
-        </Paper>
+            ))}
+          </TableBody>
+        </TableContainer>
         <br></br>
         {this.props.user.credentials.isAdmin ? (
           <MyForm categoryId={categoryId} />

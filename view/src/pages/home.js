@@ -67,11 +67,11 @@ export class home extends Component {
       <Grid container spacing={8}>
         <Grid item sm={4}>
           <Profile />
-        </Grid>
-        <Grid item sm={4}>
+          <br></br>
           {text}
         </Grid>
-        <Grid item sm={4}>
+        <Grid item sm={3}></Grid>
+        <Grid item sm={5}>
           {/* <center>
             <h3>{categoriesText}</h3>
           </center> */}
