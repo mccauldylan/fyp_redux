@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import Link from "react-router-dom/Link";
 import Profile from "../components/Profile";
 import RoleChange from "../components/buttons/RoleChange";
+import "../App.css";
 
 // MUI
 import Grid from "@material-ui/core/Grid";
@@ -14,6 +15,9 @@ import Divider from "@material-ui/core/Divider";
 import TableRow from "@material-ui/core/TableRow";
 import { FixedSizeList } from "react-window";
 import Typography from "@material-ui/core/Typography";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
 
 import ListSubheader from "@material-ui/core/ListSubheader";
 // Redux
@@ -59,34 +63,50 @@ export class home extends Component {
         Categories
       </Typography>
     ) : null;
-    let text = !loading
-      ? "**NOTE TO REVIEWER: This section deals with meta data relevant to the TCD MND Registry. There are 9 Sections in total."
-      : null;
+    let text = !loading ? (
+      <Card style={{ backgroundColour: "#ff6666" }}>
+        <CardContent style={{ backgroundColour: "#ff6666" }}>
+          <center>
+            <Typography
+              variant="h6"
+              gutterBottom
+              style={{ textDecoration: "underline", color: "#ff6666" }}
+            >
+              NOTE TO REVIEWER:
+            </Typography>
+          </center>
+          <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+            This section deals with meta data relevant to the TCD MND Registry.
+            There are 32 Categories in total.
+          </Typography>
+        </CardContent>
+      </Card>
+    ) : null;
 
     return (
-      <Grid container spacing={8}>
-        <Grid item sm={4}>
-          <Profile />
-          <br></br>
-          {text}
+      <div className="home">
+        <Grid container spacing={1}>
+          <Grid item sm={4}>
+            <Profile />
+            <br></br>
+            <Card variant="outlined" borderColor="black">
+              {text}
+            </Card>
+          </Grid>
+          <Grid item sm={4}></Grid>
+          <Grid item sm={4}>
+            <Card style={{ height: 504, overflow: "auto" }} variant="outlined">
+              <List disablePadding>
+                <ListSubheader style={{ textAlign: "center" }}>
+                  {categoriesText}
+                </ListSubheader>
+                <Divider />
+              </List>
+              {placeholder}
+            </Card>
+          </Grid>
         </Grid>
-        <Grid item sm={3}></Grid>
-        <Grid item sm={5}>
-          {/* <center>
-            <h3>{categoriesText}</h3>
-          </center> */}
-
-          <Paper style={{ height: 520, overflow: "auto" }}>
-            <List disablePadding>
-              <ListSubheader style={{ textAlign: "center" }}>
-                {categoriesText}
-              </ListSubheader>
-              <Divider />
-            </List>
-            {placeholder}
-          </Paper>
-        </Grid>
-      </Grid>
+      </div>
     );
   }
 }

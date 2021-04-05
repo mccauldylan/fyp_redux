@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Paper from "@material-ui/core/Paper";
@@ -27,42 +27,72 @@ class Profile extends Component {
 
     let profileMarkup = !loading ? (
       authenticated ? (
-        <div>
-          <Card>
+        <div style={{ color: "#f2f2f2" }}>
+          <Card variant="outlined">
             <CardContent>
-              <Typography color="textSecondary" gutterBottom>
-                Welcome,
-              </Typography>
-              <Typography variant="h5" component="h2">
-                {credentials.firstName}&nbsp;{credentials.lastName}
-              </Typography>
-              <Typography color="textSecondary">
-                {credentials.profession}
-              </Typography>
-              <Typography color="textSecondary">
-                Role: {credentials.isAdmin ? "Admin" : "Validator"}
-              </Typography>
+              <center>
+                <Typography color="textSecondary" gutterBottom>
+                  Welcome
+                </Typography>
+              </center>
+              <center>
+                <Typography variant="h5" component="h2">
+                  {credentials.firstName}&nbsp;{credentials.lastName}
+                </Typography>
+              </center>
+              <center>
+                <Typography color="textSecondary">
+                  {credentials.profession}
+                </Typography>
+              </center>
+              <center>
+                <Typography color="textSecondary">
+                  Role:{" "}
+                  {credentials.isSuperUser
+                    ? "Super User"
+                    : credentials.isAdmin
+                    ? "Admin"
+                    : "Validator"}
+                </Typography>
+              </center>
             </CardContent>
             <CardActions>
-              <RoleChange />
-              <Typography color="textSecondary">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
-              </Typography>
-
-              <Button
-                onClick={this.handleLogout}
-                size="small"
-                component={Link}
-                to="/login"
-              >
-                Logout
-              </Button>
+              {credentials.isSuperUser ? (
+                <Fragment>
+                  <center>
+                    <Button
+                      onClick={this.handleLogout}
+                      size="small"
+                      component={Link}
+                      to="/login"
+                    >
+                      logout
+                    </Button>
+                  </center>
+                </Fragment>
+              ) : (
+                <Fragment style={{ display: "flex" }}>
+                  <RoleChange />
+                  {/* <Typography color="textSecondary">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                  </Typography> */}
+                  <Button
+                    onClick={this.handleLogout}
+                    size="small"
+                    component={Link}
+                    to="/login"
+                    style={{ marginLeft: "auto" }}
+                  >
+                    Logout
+                  </Button>
+                </Fragment>
+              )}
             </CardActions>
           </Card>
         </div>
       ) : (
         <div>
-          <Card>
+          <Card variant="outlined" elevation={0}>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
                 Welcome,

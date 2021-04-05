@@ -118,7 +118,7 @@ exports.postRow = (req, res) => {
   }
 
   const newRow = {
-    index: req.body.index,
+    index: Number(req.body.index),
     dataType: req.body.dataType,
     visit: req.body.visit,
     body: req.body.body,

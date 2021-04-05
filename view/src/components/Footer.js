@@ -28,14 +28,10 @@ export class footer extends Component {
           <BottomNavigationAction
             label="Recents"
             value="recents"
-            icon={"© 2021 TCD"}
+            icon={"© 2021 TCD MND Registry"}
             style={{ color: "#b3b3b3", alignItems: "left" }}
             align="left"
           />
-          <BottomNavigationAction />
-          <BottomNavigationAction />
-          <BottomNavigationAction />
-          <BottomNavigationAction />
           <BottomNavigationAction />
           <BottomNavigationAction />
           <BottomNavigationAction />

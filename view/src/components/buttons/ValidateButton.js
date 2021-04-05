@@ -53,39 +53,73 @@ class MyEdit extends Component {
   render() {
     const { authenticated } = this.props;
     const errors = this.state.errors;
-
+    console.log(this.props.validated);
     const rowForm = authenticated ? (
-      <div>
-        <center>
-          <Button
-            size="small"
-            variant="outlined"
-            style={{ color: "black" }}
-            onClick={this.handleOpen}
-          >
-            Validate
-          </Button>
-        </center>
-
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          fullWidth
-          maxWidth="sm"
-        >
-          <DialogTitle>
-            Are you sure you want to validate this row ?
-          </DialogTitle>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
+      this.props.validated ? (
+        <div>
+          <center>
+            <Button
+              size="small"
+              variant="outlined"
+              style={{ color: "black" }}
+              onClick={this.handleOpen}
+            >
+              Unvalidate
             </Button>
-            <Button onClick={this.handleSubmit} color="primary">
+          </center>
+
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleClose}
+            fullWidth
+            maxWidth="sm"
+          >
+            <DialogTitle>
+              Are you sure you want to unvalidate this row ?
+            </DialogTitle>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={this.handleSubmit} color="primary">
+                Unvalidate
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      ) : (
+        <div>
+          <center>
+            <Button
+              size="small"
+              variant="outlined"
+              style={{ color: "black" }}
+              onClick={this.handleOpen}
+            >
               Validate
             </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+          </center>
+
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleClose}
+            fullWidth
+            maxWidth="sm"
+          >
+            <DialogTitle>
+              Are you sure you want to validate this row ?
+            </DialogTitle>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={this.handleSubmit} color="primary">
+                Validate
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      )
     ) : null;
 
     return <div>{rowForm}</div>;
