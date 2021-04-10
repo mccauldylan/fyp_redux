@@ -59,7 +59,7 @@ export class home extends Component {
     );
 
     let categoriesText = !loading ? (
-      <Typography variant="h6" component="h5">
+      <Typography variant="h6" component="h5" color="textPrimary">
         Categories
       </Typography>
     ) : null;
@@ -77,7 +77,7 @@ export class home extends Component {
           </center>
           <Typography variant="subtitle1" color="textSecondary" gutterBottom>
             This section deals with meta data relevant to the TCD MND Registry.
-            There are 32 Categories in total.
+            There are 9 Sections in total.
           </Typography>
         </CardContent>
       </Card>

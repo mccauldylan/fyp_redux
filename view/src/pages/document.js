@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 //MUI
 import Table from "@material-ui/core/Table";
-
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -40,8 +39,8 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
+    "&:nth-of-type(even)": {
+      backgroundColor: "#fff",
     },
   },
 }))(TableRow);
@@ -58,18 +57,23 @@ class document extends Component {
     const { category, loading } = this.props.data;
     let placeholder = !loading ? (
       <div>
+        <div
+          style={{
+            backgroundImage: `url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.dreamstime.com%2Fphotos-images%2Fmedical.html&psig=AOvVaw1FKwMXMvUhFuCbF_W4wZA5&ust=1618055944939000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKiksqGO8e8CFQAAAAAdAAAAABAN")`,
+          }}
+        ></div>
         <br></br>
-
         <TableContainer>
           <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell colSpan={12}>
                   <center>
-                    <Typography variant="h5" color="textSecondary">
+                    <Typography variant="h3" color="textPrimary">
                       {categoryId}
                     </Typography>
                   </center>
+                  <br></br>
                 </TableCell>
               </TableRow>
               <StyledTableRow>
@@ -87,17 +91,17 @@ class document extends Component {
                 <StyledTableCell style={{ width: "10%" }} align="left">
                   <Typography variant="subtitle2">Datatype</Typography>
                 </StyledTableCell>
-                <StyledTableCell style={{ width: "10%" }} align="left">
+                <StyledTableCell style={{ width: "10%" }} align="center">
                   <Typography variant="subtitle2">Options</Typography>
                 </StyledTableCell>
-                <StyledTableCell style={{ width: "5%" }} align="left">
-                  <Typography variant="subtitle2">Vote to Include</Typography>
+                <StyledTableCell style={{ width: "5%" }} align="center">
+                  <Typography variant="subtitle2">Include</Typography>
                 </StyledTableCell>
-                <StyledTableCell style={{ width: "5%" }} align="left">
-                  <Typography variant="subtitle2">Vote to Exclude</Typography>
+                <StyledTableCell style={{ width: "5%" }} align="center">
+                  <Typography variant="subtitle2">Exclude</Typography>
                 </StyledTableCell>
-                <StyledTableCell style={{ width: "5%" }} align="left">
-                  <Typography variant="subtitle2">Vote N/A</Typography>
+                <StyledTableCell style={{ width: "5%" }} align="center">
+                  <Typography variant="subtitle2">N/A</Typography>
                 </StyledTableCell>
                 <StyledTableCell
                   style={{ width: "5%" }}
@@ -143,7 +147,9 @@ class document extends Component {
                       <Typography variant="subtitle2">{row.body}</Typography>
                     </StyledTableCell>
                   ) : (
-                    <StyledTableCell align="left">↪ {row.body}</StyledTableCell>
+                    <StyledTableCell align="left">
+                      <Typography variant="subtitle3">﹥ {row.body}</Typography>
+                    </StyledTableCell>
                   )}
                   <StyledTableCell align="left">
                     <Typography variant="subtitle2">{row.dataType}</Typography>
@@ -153,15 +159,15 @@ class document extends Component {
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <ApproveButton rowId={row.rowId} />
-                    {row.approveCount}
+                    <Typography>{row.approveCount}</Typography>
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <DisapproveButton rowId={row.rowId} />
-                    {row.disapproveCount}
+                    <Typography>{row.disapproveCount}</Typography>
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <NaButton rowId={row.rowId} />
-                    {row.naCount}
+                    <Typography>{row.naCount}</Typography>
                   </StyledTableCell>
                   {this.props.user.credentials.isSuperUser ? (
                     <StyledTableCell align="center">

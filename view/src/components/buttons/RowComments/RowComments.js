@@ -93,8 +93,7 @@ class MyOptions extends Component {
     ) : (
       <div>
         <center>
-          <h2>{body}</h2>
-          <h2>Comments</h2>
+          <Typography variant="h5">{body}</Typography>
         </center>
 
         <Grid container spacing={2}>
@@ -103,7 +102,7 @@ class MyOptions extends Component {
               <List fullwidth>
                 {comments?.map((comment) => (
                   <div>
-                    <Card elevation={0}>
+                    <Card elevation={0} variant="outlined">
                       <CardHeader
                         action={
                           comment.username === username ? (
@@ -135,7 +134,6 @@ class MyOptions extends Component {
                         </Typography>
                       </CardContent>
                     </Card>
-                    <Divider />
                   </div>
                 ))}
               </List>

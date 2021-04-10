@@ -94,15 +94,27 @@ class Profile extends Component {
         <div>
           <Card variant="outlined" elevation={0}>
             <CardContent>
-              <Typography color="textSecondary" gutterBottom>
-                Welcome,
-              </Typography>
-              <Typography variant="h5" component="h2">
-                Please log in below
-              </Typography>
+              <center>
+                <Typography color="textSecondary" gutterBottom>
+                  Welcome
+                </Typography>
+              </center>
+              <center>
+                <Typography variant="h5" component="h2">
+                  Please log in below
+                </Typography>
+              </center>
+
               <Typography color="textSecondary"></Typography>
             </CardContent>
-            <CardActions>
+
+            <CardActions
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               <Button size="small" component={Link} to="/login">
                 Login
               </Button>

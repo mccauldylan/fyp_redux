@@ -74,3 +74,12 @@ exports.getAuthenticatedUser = (req, res) => {
       });
     });
 };
+
+App state = user: {userDetails}
+    Table state = categoryRows: {categoryRowsDetails}, userId = {user.userId}
+        TableRow rowId = {row.rowId}
+            Edit rowId = {row.rowId}
+            Delete rowId = {row.rowId} 
+            VoteFor rowId = {row.rowId}, userId = {user.userId}
+            VoteAgainst rowId = {row.rowId}, userId = {user.userId}
+            VoteNA rowId = {row.rowId}, userId = {user.userId}

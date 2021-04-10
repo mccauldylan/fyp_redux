@@ -12,6 +12,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 // Icons
 import CloseIcon from "@material-ui/icons/Close";
@@ -91,7 +92,7 @@ class MyOptions extends Component {
               <TableHead>
                 <TableRow>
                   <TableCell align="left" colSpan={3}>
-                    <b>{body} Options:</b>
+                    <Typography>{body}</Typography>
                   </TableCell>
                 </TableRow>
               </TableHead>
